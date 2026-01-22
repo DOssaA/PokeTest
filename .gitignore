@@ -32,3 +32,15 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Codex (configuration and sensitive information)
+.codex/
+
+# Spec Kit-specific files
+.genreleases/
+*.zip
+sdd-*/
