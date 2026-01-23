@@ -24,7 +24,7 @@ architecture, test-first development, and a consistent, delightful UI.
 - **Networking**: Retrofit
 - **Dependency Injection**: Koin
 - **Images**: Coil
-- **Tests**: Kotlin tests, JUnit, Mockk, Espresso
+- **Tests**: Kotlin tests, JUnit, Mockk, Espresso, Turbine
 - **Spec-Driven Development**: spec-kit workflows
 
 ## Quality Standards
