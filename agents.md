@@ -85,3 +85,10 @@ Follow these instructions before making changes.
 - Non-compliant changes must be corrected or explicitly exempted with rationale.
 
 **Constitution version**: (see version in `.specify/memory/constitution.md`).
+
+## Active Technologies
+- Kotlin 2.0.21 + Jetpack Compose (BOM 2024.09.00), ViewModel, (001-pokedex-details)
+- Room cache for Pokemon data; encrypted DataStore for user favorites (001-pokedex-details)
+
+## Recent Changes
+- 001-pokedex-details: Added Kotlin 2.0.21 + Jetpack Compose (BOM 2024.09.00), ViewModel,
