@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import com.darioossa.poketest.ui.pokedex.PokedexNavGraph
+import com.darioossa.poketest.ui.PokedexNavGraph
 import com.darioossa.poketest.ui.theme.PokeTestTheme
 
 class MainActivity : ComponentActivity() {
