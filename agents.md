@@ -24,8 +24,9 @@ Follow these instructions before making changes.
 
 - Language: Kotlin
 - Libraries: Jetpack (Compose, Navigation, ViewModel, Room, DataStore), Retrofit
-  (HTTP client), Koin (dependency injection), Coil (image loading)
-- AI acceleration: Codex using Spec Driven Development (GitHub spec-kit)
+  (HTTP client), Koin (dependency injection), Coil (efficient image loading),
+  JUnit (unit tests), Mockk (tests mocks), Espresso (ui tests), Turbine (flows tests)
+- AI acceleration: using Spec Driven Development (GitHub spec-kit)
 
 ## Constitution (Authoritative Definitions)
 
