@@ -27,8 +27,8 @@ description: "Task list for Pokedex List and Details"
 
 **Purpose**: Project initialization and dependency setup
 
-- [ ] T001 Add Retrofit/OkHttp/Room/DataStore/Koin/Coil/Navigation versions in `/Users/darioossa/Repos/PokeTest/gradle/libs.versions.toml`
-- [ ] T002 Wire dependencies and plugins (Room compiler/KSP if needed) in `/Users/darioossa/Repos/PokeTest/app/build.gradle.kts`
+- [x] T001 Add Retrofit/OkHttp/Room/DataStore/Koin/Coil/Navigation versions in `/Users/darioossa/Repos/PokeTest/gradle/libs.versions.toml`
+- [x] T002 Wire dependencies and plugins (Room compiler/KSP if needed) in `/Users/darioossa/Repos/PokeTest/app/build.gradle.kts`
 
 ---
 
@@ -36,19 +36,19 @@ description: "Task list for Pokedex List and Details"
 
 **Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
 
-- [ ] T003 Define domain models in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/domain/model/PokemonModels.kt`
-- [ ] T004 Define PokeAPI DTOs in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/remote/dto/PokemonListDto.kt`
-- [ ] T005 Define PokeAPI detail/species DTOs in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/remote/dto/PokemonDetailDto.kt`
-- [ ] T006 Create Room entities and DAO in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/local/PokemonEntity.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/local/PokemonDao.kt`
-- [ ] T007 Create Room database in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/local/PokemonDatabase.kt`
-- [ ] T008 Implement encrypted favorites storage in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/local/FavoritesDataStore.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/local/CryptoManager.kt`
-- [ ] T009 Define Retrofit service in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/remote/PokeApiService.kt`
-- [ ] T010 Add remote data source wrapper in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/remote/PokeRemoteDataSource.kt`
-- [ ] T011 Add local data source wrapper in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/local/PokeLocalDataSource.kt`
-- [ ] T012 Implement mappers in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/mapper/PokemonMappers.kt`
-- [ ] T013 Define repository interface in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/repository/PokemonRepository.kt`
-- [ ] T014 Implement repository in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/repository/PokemonRepositoryImpl.kt`
-- [ ] T015 Configure Koin modules in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/di/Modules.kt`
+- [x] T003 Define domain models in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/domain/model/PokemonModels.kt`
+- [x] T004 Define PokeAPI DTOs in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/remote/dto/PokemonListDto.kt`
+- [x] T005 Define PokeAPI detail/species DTOs in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/remote/dto/PokemonDetailDto.kt`
+- [x] T006 Create Room entities and DAO in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/local/PokemonEntity.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/local/PokemonDao.kt`
+- [x] T007 Create Room database in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/local/PokemonDatabase.kt`
+- [x] T008 Implement encrypted favorites storage in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/local/FavoritesDataStore.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/local/CryptoManager.kt`
+- [x] T009 Define Retrofit service in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/remote/PokeApiService.kt`
+- [x] T010 Add remote data source wrapper in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/remote/PokeRemoteDataSource.kt`
+- [x] T011 Add local data source wrapper in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/local/PokeLocalDataSource.kt`
+- [x] T012 Implement mappers in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/mapper/PokemonMappers.kt`
+- [x] T013 Define repository interface in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/repository/PokemonRepository.kt`
+- [x] T014 Implement repository in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/repository/PokemonRepositoryImpl.kt`
+- [x] T015 Configure Koin modules in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/di/Modules.kt`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -62,20 +62,20 @@ description: "Task list for Pokedex List and Details"
 
 ### Tests for User Story 1 (REQUIRED) ⚠️
 
-- [ ] T016 [P] [US1] Create list test fixtures in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/testdata/PokedexTestData.kt`
-- [ ] T017 [P] [US1] Test list use case in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/domain/usecase/GetPokemonListUseCaseTest.kt`
-- [ ] T018 [P] [US1] Test list view model in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/ui/pokedex/PokedexListViewModelTest.kt`
-- [ ] T019 [P] [US1] Compose UI test for list screen in `/Users/darioossa/Repos/PokeTest/app/src/androidTest/java/com/darioossa/poketest/ui/pokedex/PokedexListScreenTest.kt`
+- [x] T016 [P] [US1] Create list test fixtures in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/testdata/PokedexTestData.kt`
+- [x] T017 [P] [US1] Test list use case in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/domain/usecase/GetPokemonListUseCaseTest.kt`
+- [x] T018 [P] [US1] Test list view model in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/ui/pokedex/PokedexListViewModelTest.kt`
+- [x] T019 [P] [US1] Compose UI test for list screen in `/Users/darioossa/Repos/PokeTest/app/src/androidTest/java/com/darioossa/poketest/ui/pokedex/PokedexListScreenTest.kt`
 
 ### Implementation for User Story 1
 
-- [ ] T020 [US1] Implement list use case in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/domain/usecase/GetPokemonListUseCase.kt`
-- [ ] T021 [US1] Implement list reducer/state/event/effect in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexListReducer.kt`
-- [ ] T022 [US1] Implement list ViewModel (BaseMVIViewModel) in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexListViewModel.kt`
-- [ ] T023 [US1] Implement list UI and item composable in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexListScreen.kt`
-- [ ] T024 [US1] Implement base detail screen (name + image) in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokemonDetailScreen.kt`
-- [ ] T025 [US1] Add navigation graph and routes in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexNavGraph.kt` and update `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/MainActivity.kt`
-- [ ] T026 [US1] Apply style_reference theme tokens in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/theme/Color.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/theme/Theme.kt`
+- [x] T020 [US1] Implement list use case in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/domain/usecase/GetPokemonListUseCase.kt`
+- [x] T021 [US1] Implement list reducer/state/event/effect in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexListReducer.kt`
+- [x] T022 [US1] Implement list ViewModel (BaseMVIViewModel) in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexListViewModel.kt`
+- [x] T023 [US1] Implement list UI and item composable in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexListScreen.kt`
+- [x] T024 [US1] Implement base detail screen (name + image) in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokemonDetailScreen.kt`
+- [x] T025 [US1] Add navigation graph and routes in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexNavGraph.kt` and update `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/MainActivity.kt`
+- [x] T026 [US1] Apply style_reference theme tokens in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/theme/Color.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/theme/Theme.kt`
 
 **Checkpoint**: User Story 1 is fully functional and testable independently
 
@@ -89,16 +89,16 @@ description: "Task list for Pokedex List and Details"
 
 ### Tests for User Story 2 (REQUIRED) ⚠️
 
-- [ ] T027 [P] [US2] Test toggle favorite use case in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/domain/usecase/ToggleFavoriteUseCaseTest.kt`
-- [ ] T028 [P] [US2] Test list ViewModel favorite behavior in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/ui/pokedex/PokedexListViewModelTest.kt`
-- [ ] T029 [P] [US2] UI test for favorites persistence in `/Users/darioossa/Repos/PokeTest/app/src/androidTest/java/com/darioossa/poketest/ui/pokedex/FavoritesPersistenceTest.kt`
+- [x] T027 [P] [US2] Test toggle favorite use case in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/domain/usecase/ToggleFavoriteUseCaseTest.kt`
+- [x] T028 [P] [US2] Test list ViewModel favorite behavior in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/ui/pokedex/PokedexListViewModelTest.kt`
+- [x] T029 [P] [US2] UI test for favorites persistence in `/Users/darioossa/Repos/PokeTest/app/src/androidTest/java/com/darioossa/poketest/ui/pokedex/FavoritesPersistenceTest.kt`
 
 ### Implementation for User Story 2
 
-- [ ] T030 [US2] Implement favorite use cases in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/domain/usecase/ToggleFavoriteUseCase.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/domain/usecase/ObserveFavoritesUseCase.kt`
-- [ ] T031 [US2] Wire favorites persistence into repository in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/repository/PokemonRepositoryImpl.kt`
-- [ ] T032 [US2] Handle favorite events in list reducer/view model in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexListReducer.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexListViewModel.kt`
-- [ ] T033 [US2] Update list UI with favorite toggle in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexListScreen.kt`
+- [x] T030 [US2] Implement favorite use cases in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/domain/usecase/ToggleFavoriteUseCase.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/domain/usecase/ObserveFavoritesUseCase.kt`
+- [x] T031 [US2] Wire favorites persistence into repository in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/repository/PokemonRepositoryImpl.kt`
+- [x] T032 [US2] Handle favorite events in list reducer/view model in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexListReducer.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexListViewModel.kt`
+- [x] T033 [US2] Update list UI with favorite toggle in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexListScreen.kt`
 
 **Checkpoint**: User Story 2 is functional and persists favorites across relaunch
 
@@ -112,18 +112,18 @@ description: "Task list for Pokedex List and Details"
 
 ### Tests for User Story 3 (REQUIRED) ⚠️
 
-- [ ] T034 [P] [US3] Test detail use case in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/domain/usecase/GetPokemonDetailUseCaseTest.kt`
-- [ ] T035 [P] [US3] Test detail ViewModel in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/ui/pokedex/PokemonDetailViewModelTest.kt`
-- [ ] T036 [P] [US3] UI test for detail sections in `/Users/darioossa/Repos/PokeTest/app/src/androidTest/java/com/darioossa/poketest/ui/pokedex/PokemonDetailScreenTest.kt`
+- [x] T034 [P] [US3] Test detail use case in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/domain/usecase/GetPokemonDetailUseCaseTest.kt`
+- [x] T035 [P] [US3] Test detail ViewModel in `/Users/darioossa/Repos/PokeTest/app/src/test/java/com/darioossa/poketest/ui/pokedex/PokemonDetailViewModelTest.kt`
+- [x] T036 [P] [US3] UI test for detail sections in `/Users/darioossa/Repos/PokeTest/app/src/androidTest/java/com/darioossa/poketest/ui/pokedex/PokemonDetailScreenTest.kt`
 
 ### Implementation for User Story 3
 
-- [ ] T037 [US3] Implement detail use case in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/domain/usecase/GetPokemonDetailUseCase.kt`
-- [ ] T038 [US3] Add detail/species mapping in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/repository/PokemonRepositoryImpl.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/mapper/PokemonMappers.kt`
-- [ ] T039 [US3] Implement detail ViewModel (BaseMVIViewModel) in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokemonDetailViewModel.kt`
-- [ ] T040 [US3] Expand detail UI sections in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokemonDetailScreen.kt`
-- [ ] T041 [US3] Add loading/error UI states for detail in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokemonDetailScreen.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokemonDetailReducer.kt`
-- [ ] T042 [US3] Update detail navigation args in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexNavGraph.kt`
+- [x] T037 [US3] Implement detail use case in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/domain/usecase/GetPokemonDetailUseCase.kt`
+- [x] T038 [US3] Add detail/species mapping in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/repository/PokemonRepositoryImpl.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/mapper/PokemonMappers.kt`
+- [x] T039 [US3] Implement detail ViewModel (BaseMVIViewModel) in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokemonDetailViewModel.kt`
+- [x] T040 [US3] Expand detail UI sections in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokemonDetailScreen.kt`
+- [x] T041 [US3] Add loading/error UI states for detail in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokemonDetailScreen.kt` and `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokemonDetailReducer.kt`
+- [x] T042 [US3] Update detail navigation args in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/ui/pokedex/PokedexNavGraph.kt`
 
 **Checkpoint**: User Story 3 is complete and all detail fields render correctly
 
@@ -133,8 +133,8 @@ description: "Task list for Pokedex List and Details"
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T043 [P] Document caching and encrypted favorites behavior in `/Users/darioossa/Repos/PokeTest/README.md`
-- [ ] T044 [P] Add KDoc on repository behaviors in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/repository/PokemonRepository.kt`
+- [x] T043 [P] Document caching and encrypted favorites behavior in `/Users/darioossa/Repos/PokeTest/README.md`
+- [x] T044 [P] Add KDoc on repository behaviors in `/Users/darioossa/Repos/PokeTest/app/src/main/java/com/darioossa/poketest/data/repository/PokemonRepository.kt`
 
 ---
 

@@ -51,6 +51,11 @@ This repo follows the project constitution in `.specify/memory/constitution.md`:
 - Local persistence encrypts user data.
 - Static analysis is required; credentials are never stored in the repo.
 
+## Data & Caching
+
+- PokeAPI responses are cached locally to respect fair use and improve performance.
+- Favorite Pokemon are stored locally with encryption and persist across relaunch.
+
 ## For Contributors
 
 If you are adding features, start with the spec-kit workflow and align your
