@@ -24,7 +24,7 @@ open class BaseMVIViewModel<State : Reducer.ViewState, Event : Reducer.ViewEvent
     val state: StateFlow<State>
         get() = _state.asStateFlow()
 
-    private val _effects = Channel<Effect>(capacity = Channel.CONFLATED)
+    private val _effects = Channel<Effect>(capacity = Channel.BUFFERED)
     val effect = _effects.receiveAsFlow()
 
     fun sendEffect(effect: Effect) {
