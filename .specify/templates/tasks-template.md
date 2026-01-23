@@ -8,7 +8,7 @@ description: "Task list template for feature implementation"
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are REQUIRED by the constitution.
+**Tests**: The examples below include test tasks. Tests are REQUIRED for every user story (TDD).
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -150,7 +150,7 @@ Examples of foundational tasks (adjust based on your project):
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] TXXX [P] Documentation updates for non-intuitive behavior (KDoc/README/feature docs/in-app)
+- [ ] TXXX [P] Documentation updates for non-intuitive behavior (Docs/README/feature docs/in-app)
 - [ ] TXXX Code cleanup and refactoring
 - [ ] TXXX Performance optimization across all stories
 - [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
@@ -178,7 +178,7 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Within Each User Story
 
-- Tests (if included) MUST be written and FAIL before implementation
+- Tests MUST be written and FAIL before implementation
 - Models before services
 - Services before endpoints
 - Core implementation before integration
