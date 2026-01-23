@@ -81,7 +81,7 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 1 (REQUIRED) ⚠️
 
-> **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+> **NOTE: Write these tests FIRST and ensure they FAIL before implementation**
 
 - [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
 - [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
@@ -150,10 +150,9 @@ Examples of foundational tasks (adjust based on your project):
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] TXXX [P] Documentation updates in docs/
+- [ ] TXXX [P] Documentation updates for non-intuitive behavior (Docs/README/feature docs/in-app)
 - [ ] TXXX Code cleanup and refactoring
 - [ ] TXXX Performance optimization across all stories
-- [ ] TXXX UX consistency review against design system
 - [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
 - [ ] TXXX Security hardening
 - [ ] TXXX Run quickstart.md validation

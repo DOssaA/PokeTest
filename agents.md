@@ -51,6 +51,11 @@ Follow these instructions before making changes.
    Use the latest official documentation for frameworks/APIs. Record sources and
    versions/dates in specs/plans. Deviations must be justified.
 
+6) **Documentation Clarity & Kotlin Conventions**  
+   Non-intuitive features MUST be documented in the appropriate location
+   (KDoc, README, feature docs, or in-app copy). Code and documentation MUST
+   follow Kotlin coding conventions and KDoc style.
+
 ### Engineering Standards
 
 - Enforce SOLID/DRY in design reviews; refactor when duplication or coupling appears.
@@ -58,6 +63,7 @@ Follow these instructions before making changes.
 - Use consistent error handling and logging patterns across modules.
 - Apply static analysis, linting, and formatting; correctness warnings must be fixed
   before merge.
+- Kotlin coding conventions and KDoc style are required for code and documentation.
 
 ### Development Workflow & Quality Gates
 
@@ -65,7 +71,8 @@ Follow these instructions before making changes.
 - **Design gate**: use the simplest pattern that solves the problem.
 - **UX gate**: align with design system; document new components.
 - **Performance gate**: define budgets and verify no regressions.
-- **Documentation gate**: record official sources with versions/dates.
+- **Documentation gate**: record official sources with versions/dates; document
+  non-intuitive features; follow language conventions and documentation style.
 - **Review gate**: every PR includes a Constitution Check with evidence.
 
 ### Governance

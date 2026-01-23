@@ -95,17 +95,6 @@
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
-### UX Consistency Requirements *(mandatory)*
-
-- **UX-001**: UI MUST reuse existing navigation, components, and copy patterns.
-- **UX-002**: New UI components MUST be reusable and documented before use.
-- **UX-003**: Accessibility and localization readiness MUST be addressed for all new screens.
-
-### Performance Requirements *(mandatory)*
-
-- **PERF-001**: Feature MUST define measurable performance targets (e.g., startup, render, memory).
-- **PERF-002**: Feature MUST include a baseline measurement plan and regression thresholds.
-
 ### Key Entities *(include if feature involves data)*
 
 - **[Entity 1]**: [What it represents, key attributes without implementation]
@@ -124,8 +113,3 @@
 - **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
 - **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
 - **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
-
-## References *(mandatory)*
-
-- List official documentation sources and versions/dates used for this feature.
-- Include links to platform/library documentation and any relevant standards.

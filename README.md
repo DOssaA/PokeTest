@@ -34,6 +34,7 @@ This repo follows the project constitution in `.specify/memory/constitution.md`:
 - **Test-Driven Development** (red → green → refactor) as the default flow.
 - **UX consistency** across navigation, components, and copy.
 - **Performance budgets** with explicit targets and regression checks.
+- **Documentation clarity + Kotlin conventions** for non-intuitive features.
 - **Official docs** as the source of truth for platform and library usage.
 
 ## CI (GitHub Actions)
