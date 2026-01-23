@@ -36,6 +36,12 @@ This repo follows the project constitution in `.specify/memory/constitution.md`:
 - **Performance budgets** with explicit targets and regression checks.
 - **Official docs** as the source of truth for platform and library usage.
 
+## CI (GitHub Actions)
+
+- **Workflow**: Android CI (`.github/workflows/android.yml`)
+- **Triggers**: push and pull requests to `main`
+- **Jobs**: runs `./gradlew build` and `./gradlew test` (unit tests) on Ubuntu
+
 ## Security
 
 - HTTPS-only network traffic.
