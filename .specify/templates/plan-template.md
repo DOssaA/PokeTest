@@ -3,7 +3,7 @@
 **Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
 **Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
 
-**Note**: This template is filled in by the `/speckit.plan` command. Align the plan with the project constitution.
+**Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
 
 ## Summary
 
@@ -31,12 +31,13 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-- **TDD**: Tests defined first for each user story; red-green-refactor documented.
-- **SOLID/DRY**: Proposed structure avoids duplication and keeps responsibilities narrow.
-- **Design Patterns**: Pattern use is justified by reduced coupling or improved testability.
-- **UX Consistency**: UI changes reuse existing patterns; new components are reusable + documented.
-- **Performance Budgets**: Targets captured with baseline measurement plan.
-- **Official Docs**: Plan cites official sources with versions/dates.
+- [ ] SOLID/DRY and intentional patterns are planned
+- [ ] TDD: tests will be written first and fail before implementation
+- [ ] UX consistency: reuse navigation/components/copy; accessibility/localization planned
+- [ ] Performance budgets defined with regression checks
+- [ ] Official docs sources recorded with versions/dates
+- [ ] Documentation planned for non-intuitive behavior; Kotlin conventions enforced
+- [ ] Security constraints covered (HTTPS, OAuth, local encryption, no credentials)
 
 ## Project Structure
 
