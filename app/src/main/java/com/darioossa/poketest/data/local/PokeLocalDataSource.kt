@@ -1,21 +1,35 @@
 package com.darioossa.poketest.data.local
 
-class PokeLocalDataSource(
+interface PokeLocalDataSource {
+    suspend fun getPokemonList(limit: Int, offset: Int): List<PokemonEntity>
+
+    suspend fun getPokemonWithDetails(id: Int): PokemonWithDetails?
+
+    suspend fun savePokemonList(entities: List<PokemonEntity>)
+
+    suspend fun savePokemonDetails(
+        pokemon: PokemonEntity,
+        stats: List<PokemonStatEntity>,
+        abilities: List<PokemonAbilityEntity>
+    )
+}
+
+class PokeLocalDataSourceImpl(
     private val dao: PokemonDao
-) {
-    suspend fun getPokemonList(limit: Int, offset: Int): List<PokemonEntity> {
+) : PokeLocalDataSource {
+    override suspend fun getPokemonList(limit: Int, offset: Int): List<PokemonEntity> {
         return dao.getPokemonList(limit, offset)
     }
 
-    suspend fun getPokemonWithDetails(id: Int): PokemonWithDetails? {
+    override suspend fun getPokemonWithDetails(id: Int): PokemonWithDetails? {
         return dao.getPokemonWithDetails(id)
     }
 
-    suspend fun savePokemonList(entities: List<PokemonEntity>) {
+    override suspend fun savePokemonList(entities: List<PokemonEntity>) {
         dao.insertPokemon(entities)
     }
 
-    suspend fun savePokemonDetails(
+    override suspend fun savePokemonDetails(
         pokemon: PokemonEntity,
         stats: List<PokemonStatEntity>,
         abilities: List<PokemonAbilityEntity>

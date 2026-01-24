@@ -1,4 +1,4 @@
-package com.darioossa.poketest.ui.pokedex
+package com.darioossa.poketest.ui.pokeDetail
 
 import com.darioossa.poketest.domain.Reducer
 import com.darioossa.poketest.domain.model.PokemonDetail

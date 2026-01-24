@@ -4,9 +4,11 @@ import androidx.room.Room
 import com.darioossa.poketest.data.local.CryptoManager
 import com.darioossa.poketest.data.local.FavoritesDataStore
 import com.darioossa.poketest.data.local.PokeLocalDataSource
+import com.darioossa.poketest.data.local.PokeLocalDataSourceImpl
 import com.darioossa.poketest.data.local.PokemonDatabase
 import com.darioossa.poketest.data.remote.PokeApiService
 import com.darioossa.poketest.data.remote.PokeRemoteDataSource
+import com.darioossa.poketest.data.remote.PokeRemoteDataSourceImpl
 import com.darioossa.poketest.data.repository.PokemonRepository
 import com.darioossa.poketest.data.repository.PokemonRepositoryImpl
 import com.darioossa.poketest.domain.usecase.GetPokemonDetailUseCase
@@ -15,8 +17,8 @@ import com.darioossa.poketest.domain.usecase.ObserveFavoritesUseCase
 import com.darioossa.poketest.domain.usecase.ToggleFavoriteUseCase
 import com.darioossa.poketest.ui.pokedex.PokedexListReducer
 import com.darioossa.poketest.ui.pokedex.PokedexListViewModel
-import com.darioossa.poketest.ui.pokedex.PokemonDetailReducer
-import com.darioossa.poketest.ui.pokedex.PokemonDetailViewModel
+import com.darioossa.poketest.ui.pokeDetail.PokemonDetailReducer
+import com.darioossa.poketest.ui.pokeDetail.PokemonDetailViewModel
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -59,8 +61,8 @@ val dataModule = module {
     single { get<PokemonDatabase>().pokemonDao() }
     single { CryptoManager() }
     single { FavoritesDataStore(androidContext(), get()) }
-    single { PokeLocalDataSource(get()) }
-    single { PokeRemoteDataSource(get()) }
+    single<PokeLocalDataSource> { PokeLocalDataSourceImpl(get()) }
+    single<PokeRemoteDataSource> { PokeRemoteDataSourceImpl(get()) }
     single<PokemonRepository> { PokemonRepositoryImpl(get(), get(), get()) }
 }
 
