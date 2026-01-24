@@ -95,6 +95,8 @@ Follow these instructions before making changes.
 - Retrofit + OkHttp + Moshi for PokeAPI access (HTTPS-only)
 - Room cache for Pokemon data; encrypted DataStore for user favorites
 - Koin for DI; Coil for image loading; Coroutines + Flow for async
+- Kotlin 2.0.21 + Jetpack Compose (BOM 2024.09.00), Navigation Compose, ViewModel, DataStore Preferences, AndroidX Biometric, Koin, Room, Retrofit/OkHttp/Moshi (002-login-auth)
+- Room cache (existing) + DataStore for credentials (encrypted using Keystore-backed keys) (002-login-auth)
 
 ## Recent Changes
 - 001-pokedex-details: Implemented Pokedex list/detail, repository + use cases,
