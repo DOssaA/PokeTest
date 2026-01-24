@@ -1,8 +1,10 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-    kotlin("kapt")
+    alias(libs.plugins.google.ksp)
 }
 
 android {
@@ -34,12 +36,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
     }
 }
 
@@ -64,8 +69,8 @@ dependencies {
     implementation(libs.moshi.kotlin)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
-    kapt(libs.room.compiler)
-    kapt(libs.moshi.code.gen)
+    ksp(libs.room.compiler)
+    ksp(libs.moshi.code.gen)
     implementation(libs.datastore.preferences)
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
@@ -79,6 +84,7 @@ dependencies {
     androidTestImplementation(libs.mockk)
     androidTestImplementation(libs.mockk.agent)
     androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
