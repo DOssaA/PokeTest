@@ -22,21 +22,26 @@ class PokedexListViewModelTest {
     @get:Rule
     val dispatcherRule = MainDispatcherRule()
 
-    @Test
-    fun `load populates list state`() = runTest {
-        val repository = mockk<PokemonRepository>()
-        coEvery { repository.getPokemonList(limit = 20, offset = 0, forceRefresh = false) } returns
-            listOf(PokedexTestData.pikachuSummary, PokedexTestData.bulbasaurSummary)
-        every { repository.observeFavorites() } returns flowOf(emptySet())
+    private val repository = mockk<PokemonRepository>()
+    private lateinit var viewModel: PokedexListViewModel
 
-        val viewModel = PokedexListViewModel(
+    fun initViewModel() {
+        viewModel = PokedexListViewModel(
             getPokemonListUseCase = GetPokemonListUseCase(repository),
             toggleFavoriteUseCase = ToggleFavoriteUseCase(repository),
             observeFavoritesUseCase = ObserveFavoritesUseCase(repository),
             reducer = PokedexListReducer(),
             dispatcher = dispatcherRule.dispatcher
         )
+    }
 
+    @Test
+    fun `load populates list state`() = runTest {
+        coEvery { repository.getPokemonList(limit = 20, offset = 0, forceRefresh = false) } returns
+            listOf(PokedexTestData.pikachuSummary, PokedexTestData.bulbasaurSummary)
+        every { repository.observeFavorites() } returns flowOf(emptySet())
+
+        initViewModel()
         advanceUntilIdle()
 
         val state = viewModel.state.value
@@ -46,20 +51,12 @@ class PokedexListViewModelTest {
 
     @Test
     fun `favorites updates reflect in list state`() = runTest {
-        val repository = mockk<PokemonRepository>()
         val favoritesFlow = MutableStateFlow(setOf<Int>())
         coEvery { repository.getPokemonList(limit = 20, offset = 0, forceRefresh = false) } returns
             listOf(PokedexTestData.pikachuSummary)
         every { repository.observeFavorites() } returns favoritesFlow
 
-        val viewModel = PokedexListViewModel(
-            getPokemonListUseCase = GetPokemonListUseCase(repository),
-            toggleFavoriteUseCase = ToggleFavoriteUseCase(repository),
-            observeFavoritesUseCase = ObserveFavoritesUseCase(repository),
-            reducer = PokedexListReducer(),
-            dispatcher = dispatcherRule.dispatcher
-        )
-
+        initViewModel()
         advanceUntilIdle()
         var state = viewModel.state.value
         assertEquals(false, state.items.first().isFavorite)
@@ -72,19 +69,11 @@ class PokedexListViewModelTest {
 
     @Test
     fun `load handles errors by updating error message`() = runTest {
-        val repository = mockk<PokemonRepository>()
         coEvery { repository.getPokemonList(limit = 20, offset = 0, forceRefresh = false) } throws
             IllegalStateException("Network down")
         every { repository.observeFavorites() } returns flowOf(emptySet())
 
-        val viewModel = PokedexListViewModel(
-            getPokemonListUseCase = GetPokemonListUseCase(repository),
-            toggleFavoriteUseCase = ToggleFavoriteUseCase(repository),
-            observeFavoritesUseCase = ObserveFavoritesUseCase(repository),
-            reducer = PokedexListReducer(),
-            dispatcher = dispatcherRule.dispatcher
-        )
-
+        initViewModel()
         advanceUntilIdle()
 
         val state = viewModel.state.value
