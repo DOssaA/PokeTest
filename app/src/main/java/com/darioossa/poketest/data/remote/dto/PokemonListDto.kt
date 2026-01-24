@@ -1,8 +1,9 @@
 package com.darioossa.poketest.data.remote.dto
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-
+@JsonClass(generateAdapter = true)
 data class PokemonListResponseDto(
     @Json(name = "count") val count: Int,
     @Json(name = "next") val next: String?,
@@ -10,6 +11,7 @@ data class PokemonListResponseDto(
     @Json(name = "results") val results: List<NamedApiResourceDto>
 )
 
+@JsonClass(generateAdapter = true)
 data class NamedApiResourceDto(
     @Json(name = "name") val name: String,
     @Json(name = "url") val url: String

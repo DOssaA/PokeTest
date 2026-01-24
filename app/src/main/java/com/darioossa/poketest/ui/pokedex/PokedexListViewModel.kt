@@ -8,6 +8,7 @@ import com.darioossa.poketest.domain.usecase.ToggleFavoriteUseCase
 import com.darioossa.poketest.ui.base.BaseMVIViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -16,7 +17,7 @@ class PokedexListViewModel(
     private val toggleFavoriteUseCase: ToggleFavoriteUseCase,
     private val observeFavoritesUseCase: ObserveFavoritesUseCase,
     reducer: PokedexListReducer,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseMVIViewModel<PokedexListState, PokedexListEvent, PokedexListEffect>(
     initialState = PokedexListState(
         isLoading = true,
@@ -25,8 +26,8 @@ class PokedexListViewModel(
     ),
     reducer = reducer
 ) {
-    private var latestItems: List<PokemonSummary> = emptyList()
     private var latestFavorites: Set<Int> = emptySet()
+    private var listJob: Job? = null
 
     init {
         observeFavorites()
@@ -35,14 +36,14 @@ class PokedexListViewModel(
 
     fun loadPokemonList(forceRefresh: Boolean = false) {
         sendEvent(PokedexListEvent.Load)
-        viewModelScope.launch(ioDispatcher) {
+        listJob?.cancel()
+        listJob = viewModelScope.launch(dispatcher) {
             runCatching { getPokemonListUseCase(limit = 20, offset = 0, forceRefresh = forceRefresh) }
                 .onSuccess { items ->
-                    latestItems = items
                     sendEvent(PokedexListEvent.DataLoaded(updateFavorites(items)))
                 }
                 .onFailure { throwable ->
-                    sendEvent(PokedexListEvent.LoadFailed(throwable.message ?: "Unable to load Pokemon"))
+                    sendEvent(PokedexListEvent.LoadFailed(throwable.message ?: "No hay Pokemones :("))
                 }
         }
     }
@@ -53,7 +54,7 @@ class PokedexListViewModel(
     }
 
     fun toggleFavorite(pokemonId: Int) {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch(dispatcher) {
             toggleFavoriteUseCase(pokemonId)
         }
     }
@@ -63,10 +64,10 @@ class PokedexListViewModel(
     }
 
     private fun observeFavorites() {
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch(dispatcher) {
             observeFavoritesUseCase().collectLatest { favorites ->
                 latestFavorites = favorites
-                sendEvent(PokedexListEvent.FavoriteUpdated(updateFavorites(latestItems)))
+                sendEvent(PokedexListEvent.FavoriteUpdated(updateFavorites(state.value.items)))
             }
         }
     }

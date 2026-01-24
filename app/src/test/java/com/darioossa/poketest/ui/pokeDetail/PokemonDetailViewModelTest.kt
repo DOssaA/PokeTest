@@ -25,7 +25,7 @@ class PokemonDetailViewModelTest {
         val viewModel = PokemonDetailViewModel(
             getPokemonDetailUseCase = GetPokemonDetailUseCase(repository),
             reducer = PokemonDetailReducer(),
-            ioDispatcher = dispatcherRule.dispatcher
+            dispatcher = dispatcherRule.dispatcher
         )
 
         viewModel.loadPokemonDetail(25)
@@ -43,7 +43,7 @@ class PokemonDetailViewModelTest {
         val viewModel = PokemonDetailViewModel(
             getPokemonDetailUseCase = GetPokemonDetailUseCase(repository),
             reducer = PokemonDetailReducer(),
-            ioDispatcher = dispatcherRule.dispatcher
+            dispatcher = dispatcherRule.dispatcher
         )
 
         viewModel.loadPokemonDetail(42)

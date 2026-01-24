@@ -34,7 +34,7 @@ class PokedexListViewModelTest {
             toggleFavoriteUseCase = ToggleFavoriteUseCase(repository),
             observeFavoritesUseCase = ObserveFavoritesUseCase(repository),
             reducer = PokedexListReducer(),
-            ioDispatcher = dispatcherRule.dispatcher
+            dispatcher = dispatcherRule.dispatcher
         )
 
         advanceUntilIdle()
@@ -57,7 +57,7 @@ class PokedexListViewModelTest {
             toggleFavoriteUseCase = ToggleFavoriteUseCase(repository),
             observeFavoritesUseCase = ObserveFavoritesUseCase(repository),
             reducer = PokedexListReducer(),
-            ioDispatcher = dispatcherRule.dispatcher
+            dispatcher = dispatcherRule.dispatcher
         )
 
         advanceUntilIdle()
@@ -82,7 +82,7 @@ class PokedexListViewModelTest {
             toggleFavoriteUseCase = ToggleFavoriteUseCase(repository),
             observeFavoritesUseCase = ObserveFavoritesUseCase(repository),
             reducer = PokedexListReducer(),
-            ioDispatcher = dispatcherRule.dispatcher
+            dispatcher = dispatcherRule.dispatcher
         )
 
         advanceUntilIdle()

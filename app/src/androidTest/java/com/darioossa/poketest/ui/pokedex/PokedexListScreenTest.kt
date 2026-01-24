@@ -33,7 +33,9 @@ class PokedexListScreenTest {
         }
 
         composeRule.onNodeWithTag(PokedexListScreenTags.List).assertIsDisplayed()
-        composeRule.onNodeWithText("bulbasaur", substring = true).assertIsDisplayed()
-        composeRule.onNodeWithText("charmander", substring = true).assertIsDisplayed()
+        composeRule.onNodeWithText("bulbasaur", substring = true, ignoreCase = true)
+            .assertIsDisplayed()
+        composeRule.onNodeWithText("charmander", substring = true, ignoreCase = true)
+            .assertIsDisplayed()
     }
 }

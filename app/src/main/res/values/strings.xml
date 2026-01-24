@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">PokeTest</string>
+    <string name="pokedex_title">Pokedex</string>
+    <string name="pokedex_subtitle">Descubre tus Pokemones favoritos!</string>
+    <string name="detail_unavailable">No disponible</string>
+    <string name="detail_about">Info</string>
+    <string name="detail_attributes">Atributos</string>
+    <string name="detail_height">Altura</string>
+    <string name="detail_weight">Peso</string>
+    <string name="detail_category">Categoría</string>
+    <string name="detail_abilities">Habilidades</string>
+    <string name="detail_stats">Estadísticas</string>
 </resources>

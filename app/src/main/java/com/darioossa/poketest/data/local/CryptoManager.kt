@@ -9,9 +9,20 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 
+/**
+ * Encrypts and decrypts small payloads using an app-scoped AES/GCM key
+ * stored in Android Keystore.
+ *
+ * The encrypted payload format is `base64(iv):base64(cipherText)`.
+ */
 class CryptoManager {
     private val keyStore = KeyStore.getInstance(ANDROID_KEYSTORE).apply { load(null) }
 
+    /**
+     * Encrypts [plainText] and returns a Base64-encoded payload.
+     *
+     * @return payload in the form `base64(iv):base64(cipherText)`
+     */
     fun encrypt(plainText: String): String {
         val cipher = Cipher.getInstance(TRANSFORMATION)
         cipher.init(Cipher.ENCRYPT_MODE, getOrCreateSecretKey())
@@ -22,6 +33,11 @@ class CryptoManager {
         return "$ivEncoded:$cipherEncoded"
     }
 
+    /**
+     * Decrypts a payload produced by [encrypt].
+     *
+     * @return plaintext if the payload is valid and decryptable; otherwise null.
+     */
     fun decrypt(payload: String): String? {
         val parts = payload.split(":")
         if (parts.size != 2) return null
@@ -35,6 +51,9 @@ class CryptoManager {
         }.getOrNull()
     }
 
+    /**
+     * Returns the AES key from Keystore, creating it if missing.
+     */
     private fun getOrCreateSecretKey(): SecretKey {
         val existing = keyStore.getKey(KEY_ALIAS, null) as? SecretKey
         if (existing != null) return existing

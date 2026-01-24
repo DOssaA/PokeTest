@@ -1,6 +1,7 @@
 package com.darioossa.poketest.di
 
 import androidx.room.Room
+import com.darioossa.poketest.BuildConfig
 import com.darioossa.poketest.data.local.CryptoManager
 import com.darioossa.poketest.data.local.FavoritesDataStore
 import com.darioossa.poketest.data.local.PokeLocalDataSource
@@ -33,7 +34,8 @@ private const val POKE_API_BASE_URL = "https://pokeapi.co/api/v2/"
 val dataModule = module {
     single {
         HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BASIC
+            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.HEADERS
+                else HttpLoggingInterceptor.Level.NONE
         }
     }
     single {

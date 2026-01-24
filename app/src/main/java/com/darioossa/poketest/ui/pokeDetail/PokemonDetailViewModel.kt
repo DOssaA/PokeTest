@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 class PokemonDetailViewModel(
     private val getPokemonDetailUseCase: GetPokemonDetailUseCase,
     reducer: PokemonDetailReducer,
-    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : BaseMVIViewModel<PokemonDetailState, PokemonDetailEvent, PokemonDetailEffect>(
     initialState = PokemonDetailState(
         isLoading = true,
@@ -21,7 +21,7 @@ class PokemonDetailViewModel(
 ) {
     fun loadPokemonDetail(id: Int, forceRefresh: Boolean = false) {
         sendEvent(PokemonDetailEvent.Load)
-        viewModelScope.launch(ioDispatcher) {
+        viewModelScope.launch(dispatcher) {
             runCatching { getPokemonDetailUseCase(id, forceRefresh) }
                 .onSuccess { sendEvent(PokemonDetailEvent.Loaded(it)) }
                 .onFailure { sendEvent(PokemonDetailEvent.LoadFailed(it.message ?: "Unable to load details")) }

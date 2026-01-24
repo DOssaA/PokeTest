@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -19,18 +20,22 @@ import org.koin.androidx.compose.koinViewModel
 
 private const val ROUTE_POKEDEX = "pokedex"
 private const val ROUTE_DETAIL = "pokemon/{id}"
+private const val POKEMON_ID_ARG = "id"
 
 fun pokemonDetailRoute(id: Int) = "pokemon/$id"
 
 @Composable
-fun PokedexNavGraph(navController: NavHostController) {
+fun PokedexNavGraph(
+    navController: NavHostController,
+    listViewModel: PokedexListViewModel = koinViewModel(),
+    detailViewModel: PokemonDetailViewModel = koinViewModel()
+) {
     NavHost(navController = navController, startDestination = ROUTE_POKEDEX) {
         composable(ROUTE_POKEDEX) {
-            val viewModel: PokedexListViewModel = koinViewModel()
-            val state by viewModel.state.collectAsState()
+            val state by listViewModel.state.collectAsStateWithLifecycle()
 
             LaunchedEffect(Unit) {
-                viewModel.effect.collectLatest { effect ->
+                listViewModel.effect.collectLatest { effect ->
                     if (effect is PokedexListEffect.NavigateToDetail) {
                         navController.navigate(pokemonDetailRoute(effect.pokemonId))
                     }
@@ -39,27 +44,26 @@ fun PokedexNavGraph(navController: NavHostController) {
 
             PokedexListScreen(
                 state = state,
-                onPokemonClick = viewModel::openDetail,
-                onToggleFavorite = viewModel::toggleFavorite,
-                onRetry = viewModel::retry
+                onPokemonClick = listViewModel::openDetail,
+                onToggleFavorite = listViewModel::toggleFavorite,
+                onRetry = listViewModel::retry
             )
         }
 
         composable(
             ROUTE_DETAIL,
-            arguments = listOf(navArgument("id") { type = NavType.IntType })
+            arguments = listOf(navArgument(POKEMON_ID_ARG) { type = NavType.IntType })
         ) { backStackEntry ->
-            val pokemonId = backStackEntry.arguments?.getInt("id") ?: return@composable
-            val viewModel: PokemonDetailViewModel = koinViewModel()
-            val state by viewModel.state.collectAsState()
+            val pokemonId = backStackEntry.arguments?.getInt(POKEMON_ID_ARG) ?: return@composable
+            val state by detailViewModel.state.collectAsStateWithLifecycle()
 
             LaunchedEffect(pokemonId) {
-                viewModel.loadPokemonDetail(pokemonId)
+                detailViewModel.loadPokemonDetail(pokemonId)
             }
 
             PokemonDetailScreen(
                 state = state,
-                onRetry = { viewModel.loadPokemonDetail(pokemonId, forceRefresh = true) }
+                onRetry = { detailViewModel.loadPokemonDetail(pokemonId, forceRefresh = true) }
             )
         }
     }

@@ -11,15 +11,18 @@ import com.darioossa.poketest.domain.model.PokemonAbility
 import com.darioossa.poketest.domain.model.PokemonDetail
 import com.darioossa.poketest.domain.model.PokemonStat
 import com.darioossa.poketest.domain.model.PokemonSummary
+import com.darioossa.poketest.util.deviceLanguage
 
-private const val IMAGE_BASE_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork"
+private const val IMAGE_BASE_URL =
+    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork"
+private const val IMAGE_EXTENSION = ".png"
 
 fun NamedApiResourceDto.toPokemonEntity(now: Long): PokemonEntity {
     val id = extractIdFromUrl(url)
     return PokemonEntity(
         id = id,
         name = name,
-        imageUrl = "$IMAGE_BASE_URL/$id.png",
+        imageUrl = "$IMAGE_BASE_URL/$id$IMAGE_EXTENSION",
         typesCsv = null,
         height = null,
         weight = null,
@@ -34,7 +37,7 @@ fun PokemonDetailDto.toPokemonEntity(species: PokemonSpeciesDto, now: Long): Pok
     val category = species.englishGenus()
     val image = sprites.other?.officialArtwork?.frontDefault
         ?: sprites.frontDefault
-        ?: "$IMAGE_BASE_URL/$id.png"
+        ?: "$IMAGE_BASE_URL/$id$IMAGE_EXTENSION"
     val typesCsv = types.joinToString(",") { it.type.name }
     return PokemonEntity(
         id = id,
@@ -96,15 +99,15 @@ fun PokemonWithDetails.toDetail(): PokemonDetail {
 
 private fun PokemonSpeciesDto.englishFlavorText(): String? {
     return flavorTextEntries
-        .firstOrNull { it.language.name == "en" }
+        .firstOrNull { it.language.name == deviceLanguage() }
         ?.flavorText
-        ?.replace("\n", " ")
-        ?.replace("\f", " ")
+        ?.replace("\n", " ") // remove line breaks
+        ?.replace("\u000C", " ") // remove section separator
         ?.trim()
 }
 
 private fun PokemonSpeciesDto.englishGenus(): String? {
-    return genera.firstOrNull { it.language.name == "en" }?.genus
+    return genera.firstOrNull { it.language.name == deviceLanguage() }?.genus
 }
 
 private fun extractIdFromUrl(url: String): Int {

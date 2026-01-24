@@ -9,6 +9,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.performClick
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -38,14 +39,18 @@ class PokedexNavigationFlowTest {
         composeRule.onNodeWithTag("pokemon_card_25").performClick()
         composeRule.onNodeWithTag(PokemonDetailScreenTags.Content).assertIsDisplayed()
         composeRule.onNodeWithText("Pikachu").assertIsDisplayed()
-        composeRule.activity.onBackPressedDispatcher.onBackPressed()
+        composeRule.activity.runOnUiThread {
+            composeRule.activity.onBackPressedDispatcher.onBackPressed()
+        }
 
         composeRule.onNodeWithTag(PokedexListScreenTags.List).assertIsDisplayed()
 
         composeRule.onNodeWithTag("pokemon_card_1").performClick()
         composeRule.onNodeWithTag(PokemonDetailScreenTags.Content).assertIsDisplayed()
         composeRule.onNodeWithText("Bulbasaur").assertIsDisplayed()
-        composeRule.activity.onBackPressedDispatcher.onBackPressed()
+        composeRule.activity.runOnUiThread {
+            composeRule.activity.onBackPressedDispatcher.onBackPressed()
+        }
 
         composeRule.onNodeWithTag(PokedexListScreenTags.List).assertIsDisplayed()
     }

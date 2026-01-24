@@ -38,7 +38,7 @@ class PokemonDetailScreenTest {
         }
 
         composeRule.onNodeWithTag(PokemonDetailScreenTags.Content).assertIsDisplayed()
-        composeRule.onNodeWithText("About").assertIsDisplayed()
-        composeRule.onNodeWithText("Base Stats").assertIsDisplayed()
+        composeRule.onNodeWithTag(PokemonDetailScreenTags.About).assertIsDisplayed()
+        composeRule.onNodeWithTag(PokemonDetailScreenTags.BaseStats).assertIsDisplayed()
     }
 }

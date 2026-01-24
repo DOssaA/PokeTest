@@ -1,8 +1,9 @@
 package com.darioossa.poketest.data.remote.dto
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
-
+@JsonClass(generateAdapter = true)
 data class PokemonDetailDto(
     @Json(name = "id") val id: Int,
     @Json(name = "name") val name: String,
@@ -14,43 +15,52 @@ data class PokemonDetailDto(
     @Json(name = "sprites") val sprites: PokemonSpritesDto
 )
 
+@JsonClass(generateAdapter = true)
 data class PokemonTypeSlotDto(
     @Json(name = "type") val type: NamedApiResourceDto
 )
 
+@JsonClass(generateAdapter = true)
 data class PokemonStatSlotDto(
     @Json(name = "base_stat") val baseStat: Int,
     @Json(name = "stat") val stat: NamedApiResourceDto
 )
 
+@JsonClass(generateAdapter = true)
 data class PokemonAbilitySlotDto(
     @Json(name = "is_hidden") val isHidden: Boolean,
     @Json(name = "ability") val ability: NamedApiResourceDto
 )
 
+@JsonClass(generateAdapter = true)
 data class PokemonSpritesDto(
     @Json(name = "front_default") val frontDefault: String?,
     @Json(name = "other") val other: PokemonOtherSpritesDto?
 )
 
+@JsonClass(generateAdapter = true)
 data class PokemonOtherSpritesDto(
     @Json(name = "official-artwork") val officialArtwork: PokemonOfficialArtworkDto?
 )
 
+@JsonClass(generateAdapter = true)
 data class PokemonOfficialArtworkDto(
     @Json(name = "front_default") val frontDefault: String?
 )
 
+@JsonClass(generateAdapter = true)
 data class PokemonSpeciesDto(
     @Json(name = "flavor_text_entries") val flavorTextEntries: List<PokemonFlavorTextDto>,
     @Json(name = "genera") val genera: List<PokemonGenusDto>
 )
 
+@JsonClass(generateAdapter = true)
 data class PokemonFlavorTextDto(
     @Json(name = "flavor_text") val flavorText: String,
     @Json(name = "language") val language: NamedApiResourceDto
 )
 
+@JsonClass(generateAdapter = true)
 data class PokemonGenusDto(
     @Json(name = "genus") val genus: String,
     @Json(name = "language") val language: NamedApiResourceDto

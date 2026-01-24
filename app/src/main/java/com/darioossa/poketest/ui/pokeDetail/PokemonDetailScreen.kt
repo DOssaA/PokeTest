@@ -22,10 +22,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.darioossa.poketest.R
 import com.darioossa.poketest.domain.model.PokemonDetail
 import com.darioossa.poketest.ui.pokedex.pokemonAccentColor
 
@@ -33,6 +35,8 @@ object PokemonDetailScreenTags {
     const val Content = "pokemon_detail_content"
     const val Loading = "pokemon_detail_loading"
     const val Error = "pokemon_detail_error"
+    const val About = "pokemon_detail_about"
+    const val BaseStats = "pokemon_detail_stats"
 }
 
 @Composable
@@ -114,21 +118,29 @@ private fun DetailContent(detail: PokemonDetail) {
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                SectionHeader(title = "About")
+                val unavailableText = stringResource(R.string.detail_unavailable)
+                SectionHeader(
+                    title = stringResource(R.string.detail_about),
+                    tag = PokemonDetailScreenTags.About
+                )
                 Text(
-                    text = detail.description ?: "Not available",
+                    text = detail.description ?: unavailableText,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
 
-                SectionHeader(title = "Attributes")
-                AttributeRow("Height", detail.height?.toString() ?: "Not available")
-                AttributeRow("Weight", detail.weight?.toString() ?: "Not available")
-                AttributeRow("Category", detail.category ?: "Not available")
+                SectionHeader(title = stringResource(R.string.detail_attributes))
+                AttributeRow(stringResource(R.string.detail_height),
+                    detail.height?.toString() ?: unavailableText)
+                AttributeRow(stringResource(R.string.detail_weight),
+                    detail.weight?.toString() ?: unavailableText)
+                AttributeRow(stringResource(R.string.detail_category),
+                    detail.category ?: unavailableText)
 
-                SectionHeader(title = "Abilities")
+                SectionHeader(title = stringResource(R.string.detail_abilities))
                 if (detail.abilities.isEmpty()) {
-                    Text(text = "Not available", color = MaterialTheme.colorScheme.onSurface)
+                    Text(text = stringResource(R.string.detail_unavailable),
+                        color = MaterialTheme.colorScheme.onSurface)
                 } else {
                     detail.abilities.forEach { ability ->
                         Text(
@@ -138,9 +150,12 @@ private fun DetailContent(detail: PokemonDetail) {
                     }
                 }
 
-                SectionHeader(title = "Base Stats")
+                SectionHeader(
+                    title = stringResource(R.string.detail_stats),
+                    tag = PokemonDetailScreenTags.BaseStats
+                )
                 if (detail.stats.isEmpty()) {
-                    Text(text = "Not available", color = MaterialTheme.colorScheme.onSurface)
+                    Text(text = unavailableText, color = MaterialTheme.colorScheme.onSurface)
                 } else {
                     detail.stats.forEach { stat ->
                         StatRow(stat.name, stat.value, headerColor)
@@ -152,12 +167,13 @@ private fun DetailContent(detail: PokemonDetail) {
 }
 
 @Composable
-private fun SectionHeader(title: String) {
+private fun SectionHeader(title: String, tag: String? = null) {
     Text(
         text = title,
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Bold,
-        color = MaterialTheme.colorScheme.primary
+        color = MaterialTheme.colorScheme.primary,
+        modifier = Modifier.testTag(tag ?: title)
     )
 }
 
@@ -168,7 +184,8 @@ private fun AttributeRow(label: String, value: String) {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(text = label, style = MaterialTheme.typography.bodyMedium)
-        Text(text = value, style = MaterialTheme.typography.bodyMedium, fontWeight = FontWeight.SemiBold)
+        Text(text = value, style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.SemiBold)
     }
 }
 

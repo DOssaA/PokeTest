@@ -2,6 +2,7 @@ package com.darioossa.poketest.data.repository
 
 import com.darioossa.poketest.data.local.FavoritesDataStore
 import com.darioossa.poketest.data.local.PokeLocalDataSource
+import com.darioossa.poketest.data.local.PokemonWithDetails
 import com.darioossa.poketest.data.mapper.toAbilityEntities
 import com.darioossa.poketest.data.mapper.toDetail
 import com.darioossa.poketest.data.mapper.toPokemonEntity
@@ -39,7 +40,9 @@ class PokemonRepositoryImpl(
 
     override suspend fun getPokemonDetail(id: Int, forceRefresh: Boolean): PokemonDetail {
         val cached = local.getPokemonWithDetails(id)
-        if (!forceRefresh && cached != null && !isStale(cached.pokemon.lastUpdated)) {
+        val canUseCached = !forceRefresh && cached != null && !isStale(cached.pokemon.lastUpdated)
+                && cached.hasDetails
+        if (canUseCached) {
             return cached.toDetail()
         }
 
@@ -62,10 +65,13 @@ class PokemonRepositoryImpl(
     }
 
     private fun isStale(lastUpdated: Long): Boolean {
-        return System.currentTimeMillis() - lastUpdated > CACHE_TTL_MS
+        return System.currentTimeMillis() - lastUpdated > CACHE_DURATION_MS
     }
 
+    private val PokemonWithDetails.hasDetails get() =
+        pokemon.height != null || pokemon.weight != null
+
     private companion object {
-        private const val CACHE_TTL_MS = 24 * 60 * 60 * 1000L
+        private const val CACHE_DURATION_MS = 24 * 60 * 60 * 1000L // 1 day
     }
 }
