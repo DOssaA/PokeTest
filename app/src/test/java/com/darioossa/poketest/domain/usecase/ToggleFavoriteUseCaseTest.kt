@@ -5,6 +5,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertTrue
+import kotlin.test.assertFailsWith
 import org.junit.Test
 
 class ToggleFavoriteUseCaseTest {
@@ -19,5 +20,18 @@ class ToggleFavoriteUseCaseTest {
         val result = useCase(id)
 
         assertTrue(result)
+    }
+
+    @Test
+    fun `invoke propagates errors`() = runTest {
+        val repository = mockk<PokemonRepository>()
+        val id = 12
+        coEvery { repository.toggleFavorite(id) } throws IllegalStateException("boom")
+
+        val useCase = ToggleFavoriteUseCase(repository)
+
+        assertFailsWith<IllegalStateException> {
+            useCase(id)
+        }
     }
 }

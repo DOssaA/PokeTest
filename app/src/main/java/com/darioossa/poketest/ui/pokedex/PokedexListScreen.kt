@@ -35,6 +35,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -149,6 +151,7 @@ private fun PokemonCard(
     val headerColor = pokemonAccentColor(pokemon.id)
     Card(
         onClick = onClick,
+        modifier = Modifier.testTag("pokemon_card_${pokemon.id}"),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
     ) {
@@ -163,11 +166,16 @@ private fun PokemonCard(
             ) {
                 IconButton(
                     onClick = onToggleFavorite,
-                    modifier = Modifier.align(Alignment.TopEnd)
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .testTag("favorite_toggle_${pokemon.id}")
+                        .semantics {
+                            contentDescription = if (pokemon.isFavorite) "Favorite On" else "Favorite Off"
+                        }
                 ) {
                     Icon(
                         imageVector = if (pokemon.isFavorite) Icons.Filled.Favorite else Icons.Outlined.FavoriteBorder,
-                        contentDescription = if (pokemon.isFavorite) "Favorite On" else "Favorite Off",
+                        contentDescription = null,
                         tint = Color.White
                     )
                 }

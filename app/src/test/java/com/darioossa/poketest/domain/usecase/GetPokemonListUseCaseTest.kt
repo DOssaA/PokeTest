@@ -6,6 +6,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import kotlin.test.assertFailsWith
 import org.junit.Test
 
 class GetPokemonListUseCaseTest {
@@ -20,5 +21,18 @@ class GetPokemonListUseCaseTest {
         val result = useCase(limit = 20, offset = 0)
 
         assertEquals(expected, result)
+    }
+
+    @Test
+    fun `invoke propagates repository errors`() = runTest {
+        val repository = mockk<PokemonRepository>()
+        coEvery { repository.getPokemonList(limit = 20, offset = 0, forceRefresh = false) } throws
+            IllegalStateException("Failure")
+
+        val useCase = GetPokemonListUseCase(repository)
+
+        assertFailsWith<IllegalStateException> {
+            useCase(limit = 20, offset = 0)
+        }
     }
 }

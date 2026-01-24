@@ -1,4 +1,4 @@
-package com.darioossa.poketest.ui.pokedex
+package com.darioossa.poketest.ui.pokeDetail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.darioossa.poketest.domain.model.PokemonDetail
+import com.darioossa.poketest.ui.pokedex.pokemonAccentColor
 
 object PokemonDetailScreenTags {
     const val Content = "pokemon_detail_content"

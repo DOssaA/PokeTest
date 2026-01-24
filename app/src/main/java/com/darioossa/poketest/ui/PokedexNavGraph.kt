@@ -12,8 +12,8 @@ import androidx.navigation.navArgument
 import com.darioossa.poketest.ui.pokedex.PokedexListEffect
 import com.darioossa.poketest.ui.pokedex.PokedexListScreen
 import com.darioossa.poketest.ui.pokedex.PokedexListViewModel
-import com.darioossa.poketest.ui.pokedex.PokemonDetailScreen
-import com.darioossa.poketest.ui.pokedex.PokemonDetailViewModel
+import com.darioossa.poketest.ui.pokeDetail.PokemonDetailScreen
+import com.darioossa.poketest.ui.pokeDetail.PokemonDetailViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 

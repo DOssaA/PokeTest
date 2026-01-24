@@ -1,4 +1,4 @@
-package com.darioossa.poketest.ui.pokedex
+package com.darioossa.poketest.ui.pokeDetail
 
 import com.darioossa.poketest.data.repository.PokemonRepository
 import com.darioossa.poketest.domain.usecase.GetPokemonDetailUseCase
@@ -9,6 +9,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
 
@@ -32,5 +33,24 @@ class PokemonDetailViewModelTest {
 
         val state = viewModel.state.value
         assertEquals("pikachu", state.detail?.name)
+    }
+
+    @Test
+    fun `load handles errors by showing message`() = runTest {
+        val repository = mockk<PokemonRepository>()
+        coEvery { repository.getPokemonDetail(id = 42, forceRefresh = false) } throws IllegalStateException("Boom")
+
+        val viewModel = PokemonDetailViewModel(
+            getPokemonDetailUseCase = GetPokemonDetailUseCase(repository),
+            reducer = PokemonDetailReducer(),
+            ioDispatcher = dispatcherRule.dispatcher
+        )
+
+        viewModel.loadPokemonDetail(42)
+        advanceUntilIdle()
+
+        val state = viewModel.state.value
+        assertNull(state.detail)
+        assertEquals("Boom", state.errorMessage)
     }
 }

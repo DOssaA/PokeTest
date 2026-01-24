@@ -1,4 +1,4 @@
-package com.darioossa.poketest.ui.pokedex
+package com.darioossa.poketest.ui.pokeDetail
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule

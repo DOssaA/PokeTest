@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
 
@@ -67,5 +68,27 @@ class PokedexListViewModelTest {
         advanceUntilIdle()
         state = viewModel.state.value
         assertEquals(true, state.items.first().isFavorite)
+    }
+
+    @Test
+    fun `load handles errors by updating error message`() = runTest {
+        val repository = mockk<PokemonRepository>()
+        coEvery { repository.getPokemonList(limit = 20, offset = 0, forceRefresh = false) } throws
+            IllegalStateException("Network down")
+        every { repository.observeFavorites() } returns flowOf(emptySet())
+
+        val viewModel = PokedexListViewModel(
+            getPokemonListUseCase = GetPokemonListUseCase(repository),
+            toggleFavoriteUseCase = ToggleFavoriteUseCase(repository),
+            observeFavoritesUseCase = ObserveFavoritesUseCase(repository),
+            reducer = PokedexListReducer(),
+            ioDispatcher = dispatcherRule.dispatcher
+        )
+
+        advanceUntilIdle()
+
+        val state = viewModel.state.value
+        assertNull(state.items.firstOrNull())
+        assertEquals("Network down", state.errorMessage)
     }
 }
