@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.darioossa.poketest.ui.PokedexNavGraph
 import com.darioossa.poketest.ui.theme.PokeTestTheme
+import com.darioossa.poketest.util.biometric.BiometricPromptManager
+import org.koin.android.ext.android.get
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,10 +21,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             PokeTestTheme {
                 val navController = rememberNavController()
+                val biometricPromptManager: BiometricPromptManager = get()
                 Scaffold { innerPadding ->
-                    Box(modifier = Modifier.padding(innerPadding)) {
-                        PokedexNavGraph(navController = navController)
-                    }
+                    PokedexNavGraph(navController, innerPadding, biometricPromptManager)
                 }
             }
         }

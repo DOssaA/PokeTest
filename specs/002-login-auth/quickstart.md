@@ -25,11 +25,10 @@ This feature adds a login-first experience with three simulated authentication m
 
 ### 3) Google OAuth-style Flow (Simulated)
 1. Select Google login.
-2. Complete the simulated flow:
-   - Success: returns fake token + profile, navigates to home
-   - Cancel: returns to login with message
-   - Error: shows error message and remains on login
-   - Loading delay: shows spinner/disabled actions until resolved
+2. Complete the simulated flow in the OAuth-style screen:
+   - Continue: shows a loading state, then returns fake token + profile and navigates to home
+   - Cancel: returns to login with a message
+   - Simulate error: shows an error message and returns to login
 
 ## Test Coverage Expectations
 - Unit tests for reducers, use cases, repository, and data sources

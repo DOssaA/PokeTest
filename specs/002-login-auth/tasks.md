@@ -22,8 +22,8 @@ description: "Task list for login entry authentication implementation"
 
 **Purpose**: Project initialization and dependency setup
 
-- [ ] T001 [P] Verify/add AndroidX Biometric dependency in `app/build.gradle.kts`
-- [ ] T002 [P] Add biometric permission in `app/src/main/AndroidManifest.xml`
+- [x] T001 [P] Verify/add AndroidX Biometric dependency in `app/build.gradle.kts`
+- [x] T002 [P] Add biometric permission in `app/src/main/AndroidManifest.xml`
 
 ---
 
@@ -31,14 +31,14 @@ description: "Task list for login entry authentication implementation"
 
 **Purpose**: Core infrastructure required before any user story work
 
-- [ ] T003 [P] Define auth domain models in `app/src/main/java/com/darioossa/poketest/domain/model/AuthModels.kt`
-- [ ] T004 [P] Add auth repository interface in `app/src/main/java/com/darioossa/poketest/domain/repository/AuthRepository.kt`
-- [ ] T005 [P] Add auth local data source interface in `app/src/main/java/com/darioossa/poketest/data/auth/local/AuthLocalDataSource.kt`
-- [ ] T006 [P] Add auth remote data source interface in `app/src/main/java/com/darioossa/poketest/data/auth/remote/AuthRemoteDataSource.kt`
-- [ ] T007 [P] Implement auth encryption helper in `app/src/main/java/com/darioossa/poketest/data/auth/crypto/AuthCryptoManager.kt`
-- [ ] T008 [P] Implement encrypted credential storage in `app/src/main/java/com/darioossa/poketest/data/auth/local/AuthDataStore.kt`
-- [ ] T009 Implement auth repository in `app/src/main/java/com/darioossa/poketest/data/auth/AuthRepositoryImpl.kt`
-- [ ] T010 [P] Wire auth dependencies in `app/src/main/java/com/darioossa/poketest/di/Modules.kt`
+- [x] T003 [P] Define auth domain models in `app/src/main/java/com/darioossa/poketest/domain/model/AuthModels.kt`
+- [x] T004 [P] Add auth repository interface in `app/src/main/java/com/darioossa/poketest/data/auth/AuthRepository.kt`
+- [x] T005 [P] Add auth local data source interface in `app/src/main/java/com/darioossa/poketest/data/auth/local/AuthLocalDataSource.kt`
+- [x] T006 [P] Add auth remote data source interface in `app/src/main/java/com/darioossa/poketest/data/auth/remote/AuthRemoteDataSource.kt`
+- [x] T007 [P] Implement auth encryption helper in `app/src/main/java/com/darioossa/poketest/data/auth/crypto/AuthCryptoManager.kt`
+- [x] T008 [P] Implement encrypted credential storage in `app/src/main/java/com/darioossa/poketest/data/auth/local/AuthDataStore.kt`
+- [x] T009 Implement auth repository in `app/src/main/java/com/darioossa/poketest/data/auth/AuthRepositoryImpl.kt`
+- [x] T010 [P] Wire auth dependencies in `app/src/main/java/com/darioossa/poketest/di/Modules.kt`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin
 
@@ -52,21 +52,21 @@ description: "Task list for login entry authentication implementation"
 
 ### Tests for User Story 1 (REQUIRED) ⚠️
 
-- [ ] T011 [P] [US1] Reducer unit tests for login validation in `app/src/test/java/com/darioossa/poketest/ui/auth/LoginReducerTest.kt`
-- [ ] T012 [P] [US1] Use case tests for password login in `app/src/test/java/com/darioossa/poketest/domain/usecase/LoginWithPasswordUseCaseTest.kt`
-- [ ] T013 [P] [US1] Repository tests for password auth + secure storage in `app/src/test/java/com/darioossa/poketest/data/auth/AuthRepositoryPasswordTest.kt`
-- [ ] T014 [P] [US1] UI tests for login validation and navigation in `app/src/androidTest/java/com/darioossa/poketest/ui/auth/LoginScreenPasswordTest.kt`
+- [x] T011 [P] [US1] Reducer unit tests for login validation in `app/src/test/java/com/darioossa/poketest/ui/auth/LoginReducerTest.kt`
+- [x] T012 [P] [US1] Use case tests for password login in `app/src/test/java/com/darioossa/poketest/domain/usecase/LoginWithPasswordUseCaseTest.kt`
+- [x] T013 [P] [US1] Repository tests for password auth + secure storage in `app/src/test/java/com/darioossa/poketest/data/auth/AuthRepositoryPasswordTest.kt`
+- [x] T014 [P] [US1] UI tests for login validation and navigation in `app/src/androidTest/java/com/darioossa/poketest/ui/auth/LoginScreenPasswordTest.kt`
 
 ### Implementation for User Story 1
 
-- [ ] T015 [P] [US1] Implement login state/events/effects/reducer in `app/src/main/java/com/darioossa/poketest/ui/auth/LoginReducer.kt`
-- [ ] T016 [US1] Implement LoginViewModel for password flow in `app/src/main/java/com/darioossa/poketest/ui/auth/LoginViewModel.kt`
-- [ ] T017 [P] [US1] Implement password login use case in `app/src/main/java/com/darioossa/poketest/domain/usecase/LoginWithPasswordUseCase.kt`
-- [ ] T018 [US1] Implement password auth path in `app/src/main/java/com/darioossa/poketest/data/auth/AuthRepositoryImpl.kt`
-- [ ] T019 [US1] Build login UI (username/password, submit, errors) in `app/src/main/java/com/darioossa/poketest/ui/auth/LoginScreen.kt`
-- [ ] T020 [US1] Apply style reference tokens in `app/src/main/java/com/darioossa/poketest/ui/theme/Color.kt`
-- [ ] T021 [US1] Add login route and start destination logic in `app/src/main/java/com/darioossa/poketest/ui/PokedexNavGraph.kt`
-- [ ] T022 [US1] Implement login-to-home animation in `app/src/main/java/com/darioossa/poketest/ui/PokedexNavGraph.kt`
+- [x] T015 [P] [US1] Implement login state/events/effects/reducer in `app/src/main/java/com/darioossa/poketest/ui/auth/LoginReducer.kt`
+- [x] T016 [US1] Implement LoginViewModel for password flow in `app/src/main/java/com/darioossa/poketest/ui/auth/LoginViewModel.kt`
+- [x] T017 [P] [US1] Implement password login use case in `app/src/main/java/com/darioossa/poketest/domain/usecase/LoginWithPasswordUseCase.kt`
+- [x] T018 [US1] Implement password auth path in `app/src/main/java/com/darioossa/poketest/data/auth/AuthRepositoryImpl.kt`
+- [x] T019 [US1] Build login UI (username/password, submit, errors) in `app/src/main/java/com/darioossa/poketest/ui/auth/LoginScreen.kt`
+- [x] T020 [US1] Apply style reference tokens in `app/src/main/java/com/darioossa/poketest/ui/theme/Color.kt`
+- [x] T021 [US1] Add login route and start destination logic in `app/src/main/java/com/darioossa/poketest/ui/PokedexNavGraph.kt`
+- [x] T022 [US1] Implement login-to-home animation in `app/src/main/java/com/darioossa/poketest/ui/PokedexNavGraph.kt`
 
 **Checkpoint**: User Story 1 fully functional and testable independently
 
@@ -80,18 +80,18 @@ description: "Task list for login entry authentication implementation"
 
 ### Tests for User Story 2 (REQUIRED) ⚠️
 
-- [ ] T023 [P] [US2] Reducer tests for biometric states in `app/src/test/java/com/darioossa/poketest/ui/auth/LoginBiometricReducerTest.kt`
-- [ ] T024 [P] [US2] Use case tests for biometric login in `app/src/test/java/com/darioossa/poketest/domain/usecase/LoginWithBiometricUseCaseTest.kt`
-- [ ] T025 [P] [US2] Repository tests for biometric outcomes in `app/src/test/java/com/darioossa/poketest/data/auth/AuthRepositoryBiometricTest.kt`
-- [ ] T026 [P] [US2] UI tests for biometric flow in `app/src/androidTest/java/com/darioossa/poketest/ui/auth/LoginScreenBiometricTest.kt`
+- [x] T023 [P] [US2] Reducer tests for biometric states in `app/src/test/java/com/darioossa/poketest/ui/auth/LoginBiometricReducerTest.kt`
+- [x] T024 [P] [US2] Use case tests for biometric login in `app/src/test/java/com/darioossa/poketest/domain/usecase/LoginWithBiometricUseCaseTest.kt`
+- [x] T025 [P] [US2] Repository tests for biometric outcomes in `app/src/test/java/com/darioossa/poketest/data/auth/AuthRepositoryBiometricTest.kt`
+- [x] T026 [P] [US2] UI tests for biometric flow in `app/src/androidTest/java/com/darioossa/poketest/ui/auth/LoginScreenBiometricTest.kt`
 
 ### Implementation for User Story 2
 
-- [ ] T027 [P] [US2] Implement BiometricPrompt wrapper in `app/src/main/java/com/darioossa/poketest/util/biometric/BiometricPromptManager.kt`
-- [ ] T028 [P] [US2] Implement biometric login use case in `app/src/main/java/com/darioossa/poketest/domain/usecase/LoginWithBiometricUseCase.kt`
-- [ ] T029 [US2] Implement biometric handling in `app/src/main/java/com/darioossa/poketest/data/auth/remote/AuthRemoteDataSourceImpl.kt`
-- [ ] T030 [US2] Extend LoginViewModel for biometric flow in `app/src/main/java/com/darioossa/poketest/ui/auth/LoginViewModel.kt`
-- [ ] T031 [US2] Add biometric button and messaging to UI in `app/src/main/java/com/darioossa/poketest/ui/auth/LoginScreen.kt`
+- [x] T027 [P] [US2] Implement BiometricPrompt wrapper in `app/src/main/java/com/darioossa/poketest/util/biometric/BiometricPromptManager.kt`
+- [x] T028 [P] [US2] Implement biometric login use case in `app/src/main/java/com/darioossa/poketest/domain/usecase/LoginWithBiometricUseCase.kt`
+- [x] T029 [US2] Implement biometric handling in `app/src/main/java/com/darioossa/poketest/data/auth/remote/AuthRemoteDataSourceImpl.kt`
+- [x] T030 [US2] Extend LoginViewModel for biometric flow in `app/src/main/java/com/darioossa/poketest/ui/auth/LoginViewModel.kt`
+- [x] T031 [US2] Add biometric button and messaging to UI in `app/src/main/java/com/darioossa/poketest/ui/auth/LoginScreen.kt`
 
 **Checkpoint**: User Stories 1 and 2 are independently functional
 
@@ -105,19 +105,19 @@ description: "Task list for login entry authentication implementation"
 
 ### Tests for User Story 3 (REQUIRED) ⚠️
 
-- [ ] T032 [P] [US3] Reducer tests for Google OAuth flow states in `app/src/test/java/com/darioossa/poketest/ui/auth/LoginGoogleReducerTest.kt`
-- [ ] T033 [P] [US3] Use case tests for Google login in `app/src/test/java/com/darioossa/poketest/domain/usecase/LoginWithGoogleUseCaseTest.kt`
-- [ ] T034 [P] [US3] Provider tests for OAuth outcomes in `app/src/test/java/com/darioossa/poketest/data/auth/GoogleAuthProviderTest.kt`
-- [ ] T035 [P] [US3] UI tests for Google OAuth flow in `app/src/androidTest/java/com/darioossa/poketest/ui/auth/LoginScreenGoogleTest.kt`
+- [x] T032 [P] [US3] Reducer tests for Google OAuth flow states in `app/src/test/java/com/darioossa/poketest/ui/auth/LoginGoogleReducerTest.kt`
+- [x] T033 [P] [US3] Use case tests for Google login in `app/src/test/java/com/darioossa/poketest/domain/usecase/LoginWithGoogleUseCaseTest.kt`
+- [x] T034 [P] [US3] Provider tests for OAuth outcomes in `app/src/test/java/com/darioossa/poketest/data/auth/GoogleAuthProviderTest.kt`
+- [x] T035 [P] [US3] UI tests for Google OAuth flow in `app/src/androidTest/java/com/darioossa/poketest/ui/auth/LoginScreenGoogleTest.kt`
 
 ### Implementation for User Story 3
 
-- [ ] T036 [P] [US3] Implement simulated Google provider in `app/src/main/java/com/darioossa/poketest/data/auth/remote/GoogleAuthProvider.kt`
-- [ ] T037 [P] [US3] Implement Google login use case in `app/src/main/java/com/darioossa/poketest/domain/usecase/LoginWithGoogleUseCase.kt`
-- [ ] T038 [US3] Wire Google flow in `app/src/main/java/com/darioossa/poketest/data/auth/remote/AuthRemoteDataSourceImpl.kt`
-- [ ] T039 [US3] Extend LoginViewModel for Google OAuth flow in `app/src/main/java/com/darioossa/poketest/ui/auth/LoginViewModel.kt`
-- [ ] T040 [US3] Build OAuth-style UI screen in `app/src/main/java/com/darioossa/poketest/ui/auth/GoogleOAuthScreen.kt`
-- [ ] T041 [US3] Integrate OAuth screen in navigation in `app/src/main/java/com/darioossa/poketest/ui/PokedexNavGraph.kt`
+- [x] T036 [P] [US3] Implement simulated Google provider in `app/src/main/java/com/darioossa/poketest/data/auth/remote/GoogleAuthProvider.kt`
+- [x] T037 [P] [US3] Implement Google login use case in `app/src/main/java/com/darioossa/poketest/domain/usecase/LoginWithGoogleUseCase.kt`
+- [x] T038 [US3] Wire Google flow in `app/src/main/java/com/darioossa/poketest/data/auth/remote/AuthRemoteDataSourceImpl.kt`
+- [x] T039 [US3] Extend LoginViewModel for Google OAuth flow in `app/src/main/java/com/darioossa/poketest/ui/auth/LoginViewModel.kt`
+- [x] T040 [US3] Build OAuth-style UI screen in `app/src/main/java/com/darioossa/poketest/ui/auth/GoogleOAuthScreen.kt`
+- [x] T041 [US3] Integrate OAuth screen in navigation in `app/src/main/java/com/darioossa/poketest/ui/PokedexNavGraph.kt`
 
 **Checkpoint**: All user stories are independently functional
 
@@ -127,10 +127,10 @@ description: "Task list for login entry authentication implementation"
 
 **Purpose**: Improvements affecting multiple stories and documentation
 
-- [ ] T042 [P] Add accessibility labels and localizable strings in `app/src/main/res/values/strings.xml`
-- [ ] T043 [P] Document auth simulation and storage behavior in `README.md`
-- [ ] T044 [P] Add KDoc for auth storage/encryption behaviors in `app/src/main/java/com/darioossa/poketest/data/auth/local/AuthDataStore.kt`
-- [ ] T045 [P] Validate quickstart steps and update notes in `specs/002-login-auth/quickstart.md`
+- [x] T042 [P] Add accessibility labels and localizable strings in `app/src/main/res/values/strings.xml`
+- [x] T043 [P] Document auth simulation and storage behavior in `README.md`
+- [x] T044 [P] Add KDoc for auth storage/encryption behaviors in `app/src/main/java/com/darioossa/poketest/data/auth/local/AuthDataStore.kt`
+- [x] T045 [P] Validate quickstart steps and update notes in `specs/002-login-auth/quickstart.md`
 
 ---
 

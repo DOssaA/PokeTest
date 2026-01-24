@@ -60,6 +60,15 @@ This repo follows the project constitution in `.specify/memory/constitution.md`:
 - Local persistence encrypts user data.
 - Static analysis is required; credentials are never stored in the repo.
 
+## Authentication (Simulated)
+
+- The login flow is local-only and intended for UI/UX testing.
+- Username/password accepts any non-empty values.
+- Biometric login uses the system prompt and returns a local success/cancel/error outcome.
+- Google sign-in shows an OAuth-style UI backed by a local provider that can simulate
+  success, cancel, error, or a delayed response to exercise loading states.
+- Successful logins store credentials securely using encrypted DataStore.
+
 ## Data & Caching
 
 - PokeAPI responses are cached locally to respect fair use and improve performance.
