@@ -1,0 +1,138 @@
+openapi: 3.0.3
+info:
+  title: PokeAPI (subset for Pokedex List and Details)
+  version: 1.0.0
+  description: |-
+    External API contract for list and detail data required by the Pokedex
+    feature. This is a subset of PokeAPI v2 used by the app.
+servers:
+  - url: https://pokeapi.co/api/v2
+paths:
+  /pokemon:
+    get:
+      summary: List Pokemon
+      description: Returns paginated Pokemon summaries.
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 200
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        "200":
+          description: Paginated list of Pokemon.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    nullable: true
+                  previous:
+                    type: string
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/NamedApiResource"
+  /pokemon/{idOrName}:
+    get:
+      summary: Get Pokemon details
+      parameters:
+        - name: idOrName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pokemon details.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  height:
+                    type: integer
+                  weight:
+                    type: integer
+                  stats:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        base_stat:
+                          type: integer
+                        stat:
+                          $ref: "#/components/schemas/NamedApiResource"
+                  abilities:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        is_hidden:
+                          type: boolean
+                        ability:
+                          $ref: "#/components/schemas/NamedApiResource"
+                  sprites:
+                    type: object
+  /pokemon-species/{idOrName}:
+    get:
+      summary: Get Pokemon species details
+      description: Provides flavor text and category-related data.
+      parameters:
+        - name: idOrName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pokemon species data.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  flavor_text_entries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        flavor_text:
+                          type: string
+                        language:
+                          $ref: "#/components/schemas/NamedApiResource"
+                  genera:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        genus:
+                          type: string
+                        language:
+                          $ref: "#/components/schemas/NamedApiResource"
+components:
+  schemas:
+    NamedApiResource:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string

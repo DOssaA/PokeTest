@@ -7,8 +7,11 @@ Follow these instructions before making changes.
 
 - Follow Google's recommended Android architecture with three layers: UI, Domain,
   Data. Dependencies are unidirectional toward the Data layer.
-- UI layer uses MVI with Jetpack ViewModel.
+- UI layer uses MVI with `BaseMVIViewModel` and Reducer (State/Event/Effect).
 - Single-activity architecture with Jetpack Compose for UI.
+- Repository pattern in Data layer with remote (PokeAPI) + local (Room cache +
+  encrypted DataStore) sources.
+- Domain layer exposes use cases for data retrieval and favorites.
 - Scalability is supported by dependency injection, enabling Test Driven
   Development (TDD) to reduce defects.
 
@@ -24,8 +27,9 @@ Follow these instructions before making changes.
 
 - Language: Kotlin
 - Libraries: Jetpack (Compose, Navigation, ViewModel, Room, DataStore), Retrofit
-  (HTTP client), Koin (dependency injection), Coil (efficient image loading),
-  JUnit (unit tests), Mockk (tests mocks), Espresso (ui tests), Turbine (flows tests)
+  + OkHttp + Moshi (HTTP/JSON efficiently), Koin (dependency injection), Coil (image loading),
+  JUnit (unit tests), Mockk (test mocks), Turbine (Flow tests), Compose UI tests
+- Async: Kotlin Coroutines + Flow
 - AI acceleration: using Spec Driven Development (GitHub spec-kit)
 
 ## Constitution (Authoritative Definitions)
@@ -85,3 +89,13 @@ Follow these instructions before making changes.
 - Non-compliant changes must be corrected or explicitly exempted with rationale.
 
 **Constitution version**: (see version in `.specify/memory/constitution.md`).
+
+## Active Technologies
+- Kotlin 2.0.21 + Jetpack Compose (BOM 2024.09.00), ViewModel, Navigation
+- Retrofit + OkHttp + Moshi for PokeAPI access (HTTPS-only)
+- Room cache for Pokemon data; encrypted DataStore for user favorites
+- Koin for DI; Coil for image loading; Coroutines + Flow for async
+
+## Recent Changes
+- 001-pokedex-details: Implemented Pokedex list/detail, repository + use cases,
+  and encrypted favorites with Room/DataStore + Retrofit/OkHttp/Moshi

@@ -14,17 +14,24 @@ architecture, test-first development, and a consistent, delightful UI.
 
 - Three layers: UI, Domain, Data (Google-recommended), with unidirectional
   dependencies toward the Data layer.
-- UI uses MVI with Jetpack ViewModel, single-activity, and Jetpack Compose.
-- Dependency injection (Koin) supports modularity and testability.
+- Data layer uses the repository pattern with remote (PokeAPI) and local
+  (Room + encrypted DataStore) sources.
+- UI uses MVI with `BaseMVIViewModel`, single-activity, and Jetpack Compose.
+- Dependency injection (Koin) provides module wiring and testability.
+
+## Data Flow
+
+PokeAPI → Retrofit/OkHttp/Moshi → Repository → Use Cases → MVI ViewModels → Compose UI
 
 ## Tech Stack
 
 - **Language**: Kotlin
 - **Jetpack**: Compose, Navigation, ViewModel, Room, DataStore
-- **Networking**: Retrofit
+- **Networking**: Retrofit, OkHttp, Moshi
 - **Dependency Injection**: Koin
 - **Images**: Coil
-- **Tests**: Kotlin tests, JUnit, Mockk, Espresso, Turbine
+- **Async**: Kotlin Coroutines + Flow
+- **Tests**: Kotlin tests, JUnit, Mockk, Turbine, Compose UI tests
 - **Spec-Driven Development**: spec-kit workflows
 
 ## Quality Standards
@@ -42,7 +49,9 @@ This repo follows the project constitution in `.specify/memory/constitution.md`:
 
 - **Workflow**: Android CI (`.github/workflows/android.yml`)
 - **Triggers**: push and pull requests to `main`
-- **Jobs**: runs `./gradlew build` and `./gradlew test` (unit tests) on Ubuntu
+- **Jobs**: runs `./gradlew build`, `./gradlew test` (unit tests) and `./gradlew connectedCheck`
+- (ui tests) on Ubuntu
+- **Code Review**: Automatic Codex code reviews run on pull request creation
 
 ## Security
 
@@ -50,6 +59,25 @@ This repo follows the project constitution in `.specify/memory/constitution.md`:
 - OAuth for authentication.
 - Local persistence encrypts user data.
 - Static analysis is required; credentials are never stored in the repo.
+
+## Data & Caching
+
+- PokeAPI responses are cached locally to respect fair use and improve performance.
+- Favorite Pokemon are stored locally with encryption and persist across relaunch.
+
+## Design Reference
+
+- Use `style_reference.png` for colors, typography, spacing, and layout cues.
+
+## Getting Started
+
+- **Requirements**: Android Studio + SDK, Android 8.0+ device/emulator (minSdk 26)
+- **Run**: Open in Android Studio and run the `app` configuration
+
+## Testing
+
+- **Unit tests**: `./gradlew test`
+- **Instrumented tests**: `./gradlew connectedAndroidTest`
 
 ## For Contributors
 
