@@ -74,6 +74,13 @@ class PokedexNavigationFlowTest {
                     PokedexListState(
                         isLoading = false,
                         items = items,
+                        visibleItems = items,
+                        query = "",
+                        favoritesOnly = false,
+                        selectedTypes = emptySet(),
+                        availableTypes = emptyList(),
+                        isLoadingMore = false,
+                        loadMoreError = null,
                         errorMessage = null
                     )
                 )
@@ -84,12 +91,15 @@ class PokedexNavigationFlowTest {
                 onPokemonClick = {},
                 onRetry = {},
                 onToggleFavorite = { id ->
-                    listState.value = listState.value.copy(
-                        items = listState.value.items.map { item ->
+                    val updated = listState.value.items.map { item ->
                             if (item.id == id) item.copy(isFavorite = !item.isFavorite) else item
                         }
-                    )
-                }
+                    listState.value = listState.value.copy(items = updated, visibleItems = updated)
+                },
+                onSearchQueryChanged = {},
+                onOpenFilters = {},
+                onApplyFilters = { _, _ -> },
+                onLoadMore = {}
             )
         }
 
@@ -144,11 +154,22 @@ private fun TestPokedexNavHost() {
                 state = PokedexListState(
                     isLoading = false,
                     items = listItems,
+                    visibleItems = listItems,
+                    query = "",
+                    favoritesOnly = false,
+                    selectedTypes = emptySet(),
+                    availableTypes = emptyList(),
+                    isLoadingMore = false,
+                    loadMoreError = null,
                     errorMessage = null
                 ),
                 onPokemonClick = { id -> navController.navigate("detail/$id") },
                 onToggleFavorite = {},
-                onRetry = {}
+                onRetry = {},
+                onSearchQueryChanged = {},
+                onOpenFilters = {},
+                onApplyFilters = { _, _ -> },
+                onLoadMore = {}
             )
         }
         composable(

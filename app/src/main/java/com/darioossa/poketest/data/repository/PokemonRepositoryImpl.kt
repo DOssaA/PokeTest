@@ -2,6 +2,7 @@ package com.darioossa.poketest.data.repository
 
 import com.darioossa.poketest.data.local.FavoritesDataStore
 import com.darioossa.poketest.data.local.PokeLocalDataSource
+import com.darioossa.poketest.data.local.PokemonEntity
 import com.darioossa.poketest.data.local.PokemonWithDetails
 import com.darioossa.poketest.data.mapper.toAbilityEntities
 import com.darioossa.poketest.data.mapper.toDetail
@@ -34,8 +35,15 @@ class PokemonRepositoryImpl(
         val entities = response.results
             .map { it.toPokemonEntity(now) }
             .filter { it.id > 0 }
-        local.savePokemonList(entities)
-        return entities.map { it.toSummary(favorites) }
+        val hydrated = hydrateTypes(entities)
+        local.savePokemonList(hydrated)
+        return hydrated.map { it.toSummary(favorites) }
+    }
+
+    override suspend fun getPokemonTypes(limit: Int, offset: Int): List<String> {
+        return remote.fetchPokemonTypes(limit, offset)
+            .results
+            .map { it.name }
     }
 
     override suspend fun getPokemonDetail(id: Int, forceRefresh: Boolean): PokemonDetail {
@@ -66,6 +74,13 @@ class PokemonRepositoryImpl(
 
     private fun isStale(lastUpdated: Long): Boolean {
         return System.currentTimeMillis() - lastUpdated > CACHE_DURATION_MS
+    }
+
+    private suspend fun hydrateTypes(entities: List<PokemonEntity>): List<PokemonEntity> {
+        return entities.map { entity ->
+            val detail = remote.fetchPokemonDetail(entity.id.toString())
+            entity.copy(typesCsv = detail.types.joinToString(",") { it.type.name })
+        }
     }
 
     private val PokemonWithDetails.hasDetails get() =

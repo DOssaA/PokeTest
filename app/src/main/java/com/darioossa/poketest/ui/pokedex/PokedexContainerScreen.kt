@@ -34,7 +34,11 @@ fun PokedexContainerScreen(
             state = state,
             onPokemonClick = listViewModel::openDetail,
             onToggleFavorite = listViewModel::toggleFavorite,
-            onRetry = listViewModel::retry
+            onRetry = listViewModel::retry,
+            onSearchQueryChanged = listViewModel::updateSearchQuery,
+            onOpenFilters = {},
+            onApplyFilters = listViewModel::applyFilters,
+            onLoadMore = listViewModel::loadMore
         )
     }
 }

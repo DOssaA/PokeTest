@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.darioossa.poketest.ui.pokedex
 
 import androidx.compose.foundation.background
@@ -12,22 +14,34 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.LazyGridState
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.outlined.Tune
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,14 +54,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.rememberModalBottomSheetState
 import coil.compose.AsyncImage
 import com.darioossa.poketest.R
 import com.darioossa.poketest.domain.model.PokemonSummary
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 
 object PokedexListScreenTags {
     const val List = "pokedex_list"
     const val Loading = "pokedex_loading"
     const val Error = "pokedex_error"
+    const val SearchField = "pokedex_search_field"
+    const val EmptyState = "pokedex_empty_state"
+    const val FilterButton = "pokedex_filter_button"
+    const val FilterSheet = "pokedex_filter_sheet"
+    const val LoadMore = "pokedex_load_more"
+    const val LoadMoreRetry = "pokedex_load_more_retry"
 }
 
 @Composable
@@ -55,10 +80,39 @@ fun PokedexListScreen(
     state: PokedexListState,
     onPokemonClick: (Int) -> Unit,
     onToggleFavorite: (Int) -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    onSearchQueryChanged: (String) -> Unit,
+    onOpenFilters: () -> Unit,
+    onApplyFilters: (Boolean, Set<String>) -> Unit,
+    onLoadMore: () -> Unit
 ) {
     val listState = rememberSaveable(saver = LazyGridState.Saver) {
         LazyGridState()
+    }
+    var showFilters by rememberSaveable { mutableStateOf(false) }
+    var localFavoritesOnly by remember(state.favoritesOnly) {
+        mutableStateOf(state.favoritesOnly)
+    }
+    var localSelectedTypes by remember(state.selectedTypes) {
+        mutableStateOf(state.selectedTypes)
+    }
+    val loadMoreThreshold = 4
+
+    androidx.compose.runtime.LaunchedEffect(
+        listState,
+        state.visibleItems.size,
+        state.isLoadingMore,
+        state.loadMoreError
+    ) {
+        snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0 }
+            .distinctUntilChanged()
+            .filter { lastIndex ->
+                state.visibleItems.isNotEmpty() &&
+                    lastIndex >= (state.visibleItems.size - 1 - loadMoreThreshold) &&
+                    !state.isLoadingMore &&
+                    state.loadMoreError == null
+            }
+            .collect { onLoadMore() }
     }
 
     Box(
@@ -82,6 +136,42 @@ fun PokedexListScreen(
                 color = MaterialTheme.colorScheme.onBackground
             )
             Spacer(modifier = Modifier.height(12.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                OutlinedTextField(
+                    value = state.query,
+                    onValueChange = onSearchQueryChanged,
+                    modifier = Modifier
+                        .weight(1f)
+                        .testTag(PokedexListScreenTags.SearchField),
+                    placeholder = {
+                        Text(text = stringResource(R.string.pokedex_search_placeholder))
+                    },
+                    singleLine = true,
+                    shape = MaterialTheme.shapes.large
+                )
+                Spacer(modifier = Modifier.size(10.dp))
+                IconButton(
+                    onClick = {
+                        showFilters = true
+                        onOpenFilters()
+                    },
+                    modifier = Modifier
+                        .size(44.dp)
+                        .clip(CircleShape)
+                        .background(MaterialTheme.colorScheme.primary)
+                        .testTag(PokedexListScreenTags.FilterButton)
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Tune,
+                        contentDescription = stringResource(R.string.pokedex_filter_button_cd),
+                        tint = Color.White
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(12.dp))
 
             when {
                 state.isLoading -> {
@@ -103,14 +193,97 @@ fun PokedexListScreen(
                         modifier = Modifier.weight(1f)
                     )
                 }
+                state.visibleItems.isEmpty() -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .testTag(PokedexListScreenTags.EmptyState),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = stringResource(R.string.pokedex_empty_state),
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onBackground,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
                 else -> {
                     PokemonGrid(
-                        items = state.items,
+                        items = state.visibleItems,
                         listState = listState,
+                        isLoadingMore = state.isLoadingMore,
+                        loadMoreError = state.loadMoreError,
+                        onLoadMore = onLoadMore,
                         onPokemonClick = onPokemonClick,
                         onToggleFavorite = onToggleFavorite
                     )
                 }
+            }
+        }
+    }
+
+    if (showFilters) {
+        val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+        ModalBottomSheet(
+            onDismissRequest = { showFilters = false },
+            sheetState = sheetState,
+            modifier = Modifier.testTag(PokedexListScreenTags.FilterSheet)
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 12.dp)
+            ) {
+                Text(
+                    text = stringResource(R.string.pokedex_filter_title),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(
+                        checked = localFavoritesOnly,
+                        onCheckedChange = { checked ->
+                            localFavoritesOnly = checked
+                            onApplyFilters(localFavoritesOnly, localSelectedTypes)
+                        }
+                    )
+                    Spacer(modifier = Modifier.size(8.dp))
+                    Text(text = stringResource(R.string.pokedex_filter_favorites))
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = stringResource(R.string.pokedex_filter_types),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                state.availableTypes.forEach { type ->
+                    val isSelected = localSelectedTypes.contains(type)
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Checkbox(
+                            checked = isSelected,
+                            onCheckedChange = { checked ->
+                                localSelectedTypes = if (checked) {
+                                    localSelectedTypes + type
+                                } else {
+                                    localSelectedTypes - type
+                                }
+                                onApplyFilters(localFavoritesOnly, localSelectedTypes)
+                            }
+                        )
+                        Spacer(modifier = Modifier.size(8.dp))
+                        Text(text = type.replaceFirstChar { it.uppercase() })
+                    }
+                }
+                Spacer(modifier = Modifier.height(12.dp))
             }
         }
     }
@@ -120,6 +293,9 @@ fun PokedexListScreen(
 private fun PokemonGrid(
     items: List<PokemonSummary>,
     listState: LazyGridState,
+    isLoadingMore: Boolean,
+    loadMoreError: String?,
+    onLoadMore: () -> Unit,
     onPokemonClick: (Int) -> Unit,
     onToggleFavorite: (Int) -> Unit
 ) {
@@ -139,6 +315,41 @@ private fun PokemonGrid(
                 onClick = { onPokemonClick(pokemon.id) },
                 onToggleFavorite = { onToggleFavorite(pokemon.id) }
             )
+        }
+        if (isLoadingMore) {
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 12.dp)
+                        .testTag(PokedexListScreenTags.LoadMore),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+        }
+        if (loadMoreError != null) {
+            item(span = { GridItemSpan(maxLineSpan) }) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 12.dp)
+                        .testTag(PokedexListScreenTags.LoadMoreRetry),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = loadMoreError,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.error,
+                        textAlign = TextAlign.Center
+                    )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Button(onClick = onLoadMore) {
+                        Text(text = stringResource(R.string.pokedex_load_more_retry))
+                    }
+                }
+            }
         }
     }
 }

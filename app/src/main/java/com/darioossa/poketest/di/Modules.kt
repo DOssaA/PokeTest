@@ -23,6 +23,7 @@ import com.darioossa.poketest.data.repository.PokemonRepository
 import com.darioossa.poketest.data.repository.PokemonRepositoryImpl
 import com.darioossa.poketest.domain.usecase.GetPokemonDetailUseCase
 import com.darioossa.poketest.domain.usecase.GetPokemonListUseCase
+import com.darioossa.poketest.domain.usecase.GetPokemonTypesUseCase
 import com.darioossa.poketest.domain.usecase.LoginWithBiometricUseCase
 import com.darioossa.poketest.domain.usecase.LoginWithGoogleUseCase
 import com.darioossa.poketest.domain.usecase.LoginWithPasswordUseCase
@@ -93,6 +94,7 @@ val dataModule = module {
 val domainModule = module {
     factory { GetPokemonListUseCase(get()) }
     factory { GetPokemonDetailUseCase(get()) }
+    factory { GetPokemonTypesUseCase(get()) }
     factory { ToggleFavoriteUseCase(get()) }
     factory { ObserveFavoritesUseCase(get()) }
     factory { LoginWithBiometricUseCase(get()) }
@@ -115,6 +117,7 @@ val uiModule = module {
     viewModel {
         PokedexListViewModel(
             getPokemonListUseCase = get(),
+            getPokemonTypesUseCase = get(),
             toggleFavoriteUseCase = get(),
             observeFavoritesUseCase = get(),
             reducer = get()

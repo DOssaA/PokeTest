@@ -12,6 +12,11 @@ interface PokemonRepository {
     suspend fun getPokemonList(limit: Int, offset: Int, forceRefresh: Boolean = false): List<PokemonSummary>
 
     /**
+     * Returns the list of available Pokemon types.
+     */
+    suspend fun getPokemonTypes(limit: Int = 100, offset: Int = 0): List<String>
+
+    /**
      * Returns Pokemon detail data. Uses local cache when fresh unless [forceRefresh] is true.
      */
     suspend fun getPokemonDetail(id: Int, forceRefresh: Boolean = false): PokemonDetail
