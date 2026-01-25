@@ -12,6 +12,9 @@ import com.darioossa.poketest.data.mapper.toSummary
 import com.darioossa.poketest.data.remote.PokeRemoteDataSource
 import com.darioossa.poketest.domain.model.PokemonDetail
 import com.darioossa.poketest.domain.model.PokemonSummary
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 
 class PokemonRepositoryImpl(
@@ -24,10 +27,18 @@ class PokemonRepositoryImpl(
         offset: Int,
         forceRefresh: Boolean
     ): List<PokemonSummary> {
+        // Cache policy:
+        // 1) Use cached list when fresh, but backfill missing types for filter accuracy.
+        // 2) Otherwise fetch list from network, hydrate types via detail calls, then persist.
         val favorites = favoritesStore.getFavorites()
         val cached = local.getPokemonList(limit, offset)
+        val cachedMissingTypes = cached.any { it.typesCsv.isNullOrBlank() }
         if (!forceRefresh && cached.isNotEmpty() && cached.none { isStale(it.lastUpdated) }) {
-            return cached.map { it.toSummary(favorites) }
+            val hydrated = if (cachedMissingTypes) hydrateTypes(cached) else cached
+            if (cachedMissingTypes) {
+                local.savePokemonList(hydrated)
+            }
+            return hydrated.map { it.toSummary(favorites) }
         }
 
         val response = remote.fetchPokemonList(limit, offset)
@@ -77,9 +88,27 @@ class PokemonRepositoryImpl(
     }
 
     private suspend fun hydrateTypes(entities: List<PokemonEntity>): List<PokemonEntity> {
-        return entities.map { entity ->
-            val detail = remote.fetchPokemonDetail(entity.id.toString())
-            entity.copy(typesCsv = detail.types.joinToString(",") { it.type.name })
+        // Hydration policy: best-effort detail fetch per entity with bounded concurrency.
+        // Failures keep existing entity so list load doesn't fail due to one item.
+        if (entities.isEmpty()) return entities
+        return coroutineScope {
+            entities.chunked(TYPE_HYDRATION_CONCURRENCY).flatMap { chunk ->
+                chunk.map { entity ->
+                    async {
+                        if (!entity.typesCsv.isNullOrBlank()) {
+                            entity
+                        } else {
+                            runCatching { remote.fetchPokemonDetail(entity.id.toString()) }
+                                .map { detail ->
+                                    entity.copy(
+                                        typesCsv = detail.types.joinToString(",") { it.type.name }
+                                    )
+                                }
+                                .getOrElse { entity }
+                        }
+                    }
+                }.awaitAll()
+            }
         }
     }
 
@@ -88,5 +117,6 @@ class PokemonRepositoryImpl(
 
     private companion object {
         private const val CACHE_DURATION_MS = 24 * 60 * 60 * 1000L // 1 day
+        private const val TYPE_HYDRATION_CONCURRENCY = 6
     }
 }

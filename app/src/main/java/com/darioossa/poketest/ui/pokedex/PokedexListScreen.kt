@@ -97,6 +97,7 @@ fun PokedexListScreen(
         mutableStateOf(state.selectedTypes)
     }
     val loadMoreThreshold = 4
+    val loadMoreTriggerIndex = (state.visibleItems.size - 1 - loadMoreThreshold).coerceAtLeast(0)
 
     androidx.compose.runtime.LaunchedEffect(
         listState,
@@ -107,8 +108,11 @@ fun PokedexListScreen(
         snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0 }
             .distinctUntilChanged()
             .filter { lastIndex ->
+                val hasUserScrolled = listState.firstVisibleItemIndex > 0 ||
+                    listState.firstVisibleItemScrollOffset > 0
                 state.visibleItems.isNotEmpty() &&
-                    lastIndex >= (state.visibleItems.size - 1 - loadMoreThreshold) &&
+                    hasUserScrolled &&
+                    lastIndex >= loadMoreTriggerIndex &&
                     !state.isLoadingMore &&
                     state.loadMoreError == null
             }

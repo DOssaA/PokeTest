@@ -56,6 +56,26 @@ class PokemonRepositoryImplTest {
     }
 
     @Test
+    fun `getPokemonList hydrates types when cache fresh but missing`() = runTest {
+        val now = System.currentTimeMillis()
+        val cached = listOf(sampleEntity(now).copy(typesCsv = null))
+        val detail = sampleDetail(id = 25, name = "pikachu", types = listOf("electric"))
+        coEvery { favoritesStore.getFavorites() } returns emptySet()
+        coEvery { local.getPokemonList(limit = 20, offset = 0) } returns cached
+        coEvery { remote.fetchPokemonDetail("25") } returns detail
+        coEvery { local.savePokemonList(any()) } returns Unit
+
+        val result = repository.getPokemonList(limit = 20, offset = 0, forceRefresh = false)
+
+        assertEquals(listOf("electric"), result.first().types)
+        coVerify(exactly = 0) { remote.fetchPokemonList(any(), any()) }
+        coVerify(exactly = 1) { remote.fetchPokemonDetail("25") }
+        coVerify(exactly = 1) {
+            local.savePokemonList(match { it.first().typesCsv?.contains("electric") == true })
+        }
+    }
+
+    @Test
     fun `getPokemonList refreshes when cache is stale`() = runTest {
         val stale = listOf(sampleEntity(System.currentTimeMillis() - 25 * 60 * 60 * 1000L))
         val response = PokemonListResponseDto(
