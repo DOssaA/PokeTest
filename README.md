@@ -1,5 +1,116 @@
 # PokeTest
 
+PokeTest es una app nativa de Android que usa PokeAPI para ayudar a los usuarios
+a explorar Pokémon, ver detalles y elegir favoritos. El proyecto enfatiza una
+arquitectura limpia, desarrollo guiado por pruebas y una UI consistente y
+agradable.
+
+## Destacado
+
+- Explora y descubre Pokémon con pantallas rápidas y responsivas.
+- Consulta detalles completos y administra favoritos.
+- Busca por nombre, filtra por tipo/favoritos y sigue navegando con carga incremental.
+- Construida con una arquitectura escalable por capas y disciplina TDD.
+
+## Instalación
+
+- **Requisitos**: Android Studio (estable), Android SDK (API 26+), JDK 11 (incluido en Android Studio), Git.
+- **Clonar**: clona el repositorio y abre el proyecto en Android Studio.
+- **Sincronizar**: permite que Gradle sincronice; si se solicita, usa JDK 11 para Gradle.
+- **SDK**: asegúrate de que `local.properties` tenga `sdk.dir` (Android Studio lo genera).
+- **Dispositivo**: usa un emulador o dispositivo Android 8.0+ con acceso a Internet.
+
+## Operación
+
+- Inicia la app con la configuración `app` desde Android Studio.
+- En el login local, usa cualquier usuario/contraseña no vacíos.
+- En Google sign-in, selecciona el resultado simulado para probar estados.
+- Explora la Pokédex, abre detalles, y marca favoritos desde la pantalla de detalle.
+- La primera carga requiere red; luego se reutiliza el caché local cuando está disponible.
+
+## Arquitectura
+
+- Tres capas: UI, Domain, Data (recomendado por Google), con dependencias
+  unidireccionales hacia la capa Data.
+- La capa Data usa el patrón repositorio con fuentes remota (PokeAPI) y local
+  (Room + DataStore cifrado).
+- La UI usa MVI con `BaseMVIViewModel`, single-activity y Jetpack Compose.
+- La inyección de dependencias (Koin) permite el cableado de módulos y la testabilidad.
+
+## Flujo de datos
+
+PokeAPI → Retrofit/OkHttp/Moshi → Repository → Use Cases → MVI ViewModels → Compose UI
+
+## Tech Stack
+
+- **Lenguaje**: Kotlin
+- **Jetpack**: Compose, Navigation, ViewModel, Room, DataStore
+- **Networking**: Retrofit, OkHttp, Moshi
+- **Inyección Dependencias**: Koin
+- **Imágenes**: Coil
+- **Asincronía**: Kotlin Coroutines + Flow
+- **Tests**: Kotlin tests, JUnit, Mockk, Turbine, Compose UI tests
+- **aceleración IA con Spec-Driven Development**: flujos spec-kit (de Github)
+
+## Estándares de Calidad
+
+Este repo sigue la constitución del proyecto en `.specify/memory/constitution.md`:
+
+- **SOLID + DRY** con patrones pragmáticos.
+- **Test-Driven Development** (red → green → refactor) como flujo por defecto.
+- **Consistencia UX** en navegación, componentes y copy.
+- **Presupuestos de performance** con objetivos explícitos y checks de regresión.
+- **Claridad documental + convenciones Kotlin** para features no intuitivas.
+- **Docs oficiales** como fuente de verdad para plataforma y librerías.
+
+## CI (GitHub Actions)
+
+- **Workflow**: Android CI (`.github/workflows/android.yml`)
+- **Triggers**: push y pull requests a `main`
+- **Jobs**: ejecuta `./gradlew build`, `./gradlew test` (unit tests) y
+  `./gradlew connectedCheck` (UI tests) en Ubuntu
+- **Code Review**: reviews automáticos de Codex al crear un PR
+
+## Security
+
+- Tráfico de red solo por HTTPS.
+- OAuth para autenticación.
+- Persistencia local cifra los datos del usuario.
+- Se requiere análisis estático; las credenciales nunca se almacenan en el repo.
+
+## Authentication (Simulated)
+
+- El flujo de login es local y está pensado para pruebas de UI/UX.
+- Usuario/contraseña acepta cualquier valor no vacío.
+- El login biométrico usa el prompt del sistema y devuelve éxito/cancelación/error local.
+- El inicio con Google muestra una UI estilo OAuth respaldada por un proveedor local
+  que puede simular éxito, cancelación, error o una respuesta demorada.
+- Los logins exitosos guardan credenciales de forma segura usando DataStore cifrado.
+
+## Data & Caching
+
+- Las respuestas de PokeAPI se cachean localmente para respetar el uso justo y mejorar el rendimiento.
+- Los favoritos se almacenan localmente con cifrado y persisten tras reiniciar la app.
+- La lista de la Pokédex soporta búsqueda, filtros por tipo/favoritos y carga incremental.
+
+## Design Reference
+
+- Usa como referencia https://www.figma.com/design/pFG8ymYDeuRKDVFkzgPF7v/Pok%C3%A9dex--Community-?node-id=0-1&p=f
+
+## Testing
+
+- **Unit tests**: `./gradlew test`
+- **Instrumented tests**: `./gradlew connectedAndroidTest`
+
+## For Contributors
+
+Si agregas features, comienza con el flujo spec-kit y alinea tu trabajo con la
+constitución y las guías en `agents.md`.
+
+----------------------
+
+# PokeTest
+
 PokeTest is a native Android app that uses the PokeAPI to help users explore
 Pokemon, view details, and pick favorites. The project emphasizes clean
 architecture, test-first development, and a consistent, delightful UI.
@@ -50,8 +161,8 @@ This repo follows the project constitution in `.specify/memory/constitution.md`:
 
 - **Workflow**: Android CI (`.github/workflows/android.yml`)
 - **Triggers**: push and pull requests to `main`
-- **Jobs**: runs `./gradlew build`, `./gradlew test` (unit tests) and `./gradlew connectedCheck`
-- (ui tests) on Ubuntu
+- **Jobs**: runs `./gradlew build`, `./gradlew test` (unit tests) and
+  `./gradlew connectedCheck` (ui tests) on Ubuntu
 - **Code Review**: Automatic Codex code reviews run on pull request creation
 
 ## Security
@@ -78,12 +189,23 @@ This repo follows the project constitution in `.specify/memory/constitution.md`:
 
 ## Design Reference
 
-- Use `style_reference.png` for colors, typography, spacing, and layout cues.
+- Use as reference https://www.figma.com/design/pFG8ymYDeuRKDVFkzgPF7v/Pok%C3%A9dex--Community-?node-id=0-1&p=f
 
-## Getting Started
+## Installation
 
-- **Requirements**: Android Studio + SDK, Android 8.0+ device/emulator (minSdk 26)
-- **Run**: Open in Android Studio and run the `app` configuration
+- **Requirements**: Android Studio (stable), Android SDK (API 26+), JDK 11 (bundled with Android Studio), Git.
+- **Clone**: clone the repo and open the project in Android Studio.
+- **Sync**: allow Gradle to sync; if prompted, use JDK 11 for Gradle.
+- **SDK**: ensure `local.properties` contains `sdk.dir` (Android Studio generates it).
+- **Device**: use an Android 8.0+ emulator or device with Internet access.
+
+## Operation
+
+- Launch the app using the `app` run configuration in Android Studio.
+- For local login, use any non-empty username/password.
+- For Google sign-in, select a simulated outcome to exercise states.
+- Browse the Pokedex, open details, and toggle favorites from the detail screen.
+- The first load requires network access; afterward local cache is used when available.
 
 ## Testing
 
