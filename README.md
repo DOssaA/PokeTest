@@ -2,7 +2,7 @@
 
 PokeTest es una app nativa de Android que usa PokeAPI para ayudar a los usuarios
 a explorar Pokémon, ver detalles y elegir favoritos. El proyecto enfatiza una
-arquitectura limpia, desarrollo guiado por pruebas y una UI consistente y
+arquitectura limpia, desarrollo guiado por pruebas (TDD) y una UI consistente y
 agradable.
 
 ## Destacado
@@ -11,6 +11,9 @@ agradable.
 - Consulta detalles completos y administra favoritos.
 - Busca por nombre, filtra por tipo/favoritos y sigue navegando con carga incremental.
 - Construida con una arquitectura escalable por capas y disciplina TDD.
+
+Ingreso por biometría y búsqueda:
+https://github.com/user-attachments/assets/83558a27-18f7-44d7-a4a3-4b8bbdaadc64
 
 ## Instalación
 
