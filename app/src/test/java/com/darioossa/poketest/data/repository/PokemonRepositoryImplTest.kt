@@ -56,6 +56,26 @@ class PokemonRepositoryImplTest {
     }
 
     @Test
+    fun `getPokemonList hydrates types when cache fresh but missing`() = runTest {
+        val now = System.currentTimeMillis()
+        val cached = listOf(sampleEntity(now).copy(typesCsv = null))
+        val detail = sampleDetail(id = 25, name = "pikachu", types = listOf("electric"))
+        coEvery { favoritesStore.getFavorites() } returns emptySet()
+        coEvery { local.getPokemonList(limit = 20, offset = 0) } returns cached
+        coEvery { remote.fetchPokemonDetail("25") } returns detail
+        coEvery { local.savePokemonList(any()) } returns Unit
+
+        val result = repository.getPokemonList(limit = 20, offset = 0, forceRefresh = false)
+
+        assertEquals(listOf("electric"), result.first().types)
+        coVerify(exactly = 0) { remote.fetchPokemonList(any(), any()) }
+        coVerify(exactly = 1) { remote.fetchPokemonDetail("25") }
+        coVerify(exactly = 1) {
+            local.savePokemonList(match { it.first().typesCsv?.contains("electric") == true })
+        }
+    }
+
+    @Test
     fun `getPokemonList refreshes when cache is stale`() = runTest {
         val stale = listOf(sampleEntity(System.currentTimeMillis() - 25 * 60 * 60 * 1000L))
         val response = PokemonListResponseDto(
@@ -64,16 +84,24 @@ class PokemonRepositoryImplTest {
             previous = null,
             results = listOf(NamedApiResourceDto("bulbasaur", "https://pokeapi.co/api/v2/pokemon/1/"))
         )
+        val detail = sampleDetail(
+            id = 1,
+            name = "bulbasaur",
+            types = listOf("grass", "poison")
+        )
         coEvery { favoritesStore.getFavorites() } returns emptySet()
         coEvery { local.getPokemonList(limit = 20, offset = 0) } returns stale
         coEvery { remote.fetchPokemonList(20, 0) } returns response
+        coEvery { remote.fetchPokemonDetail("1") } returns detail
         coEvery { local.savePokemonList(any()) } returns Unit
 
         val result = repository.getPokemonList(limit = 20, offset = 0, forceRefresh = false)
 
         assertEquals(1, result.size)
         assertEquals(1, result.first().id)
+        assertEquals(listOf("grass", "poison"), result.first().types)
         coVerify(exactly = 1) { remote.fetchPokemonList(20, 0) }
+        coVerify(exactly = 1) { remote.fetchPokemonDetail("1") }
         coVerify(exactly = 1) { local.savePokemonList(match { it.first().id == 1 }) }
     }
 
@@ -135,6 +163,25 @@ class PokemonRepositoryImplTest {
         assertEquals(flow, result)
     }
 
+    @Test
+    fun `getPokemonTypes returns type names from remote`() = runTest {
+        val response = PokemonListResponseDto(
+            count = 2,
+            next = null,
+            previous = null,
+            results = listOf(
+                NamedApiResourceDto("fire", "https://pokeapi.co/api/v2/type/10/"),
+                NamedApiResourceDto("water", "https://pokeapi.co/api/v2/type/11/")
+            )
+        )
+        coEvery { remote.fetchPokemonTypes(100, 0) } returns response
+
+        val result = repository.getPokemonTypes()
+
+        assertEquals(listOf("fire", "water"), result)
+        coVerify(exactly = 1) { remote.fetchPokemonTypes(100, 0) }
+    }
+
     private fun sampleEntity(timestamp: Long) = PokemonEntity(
         id = 25,
         name = "pikachu",
@@ -153,12 +200,16 @@ class PokemonRepositoryImplTest {
         abilities = listOf(PokemonAbilityEntity(25, "static", false))
     )
 
-    private fun sampleDetail() = PokemonDetailDto(
-        id = 25,
-        name = "pikachu",
+    private fun sampleDetail(
+        id: Int = 25,
+        name: String = "pikachu",
+        types: List<String> = listOf("electric")
+    ) = PokemonDetailDto(
+        id = id,
+        name = name,
         height = 4,
         weight = 60,
-        types = listOf(PokemonTypeSlotDto(NamedApiResourceDto("electric", "url"))),
+        types = types.map { PokemonTypeSlotDto(NamedApiResourceDto(it, "url")) },
         stats = listOf(PokemonStatSlotDto(35, NamedApiResourceDto("hp", "url"))),
         abilities = listOf(PokemonAbilitySlotDto(false, NamedApiResourceDto("static", "url"))),
         sprites = PokemonSpritesDto(

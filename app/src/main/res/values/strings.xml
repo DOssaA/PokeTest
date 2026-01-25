@@ -2,6 +2,13 @@
     <string name="app_name">PokeTest</string>
     <string name="pokedex_title">Pokedex</string>
     <string name="pokedex_subtitle">Descubre tus Pokemones favoritos!</string>
+    <string name="pokedex_search_placeholder">Buscar Pokemon</string>
+    <string name="pokedex_empty_state">No se encontraron Pokemones</string>
+    <string name="pokedex_filter_title">Filtros</string>
+    <string name="pokedex_filter_favorites">Solo favoritos</string>
+    <string name="pokedex_filter_types">Tipos</string>
+    <string name="pokedex_filter_button_cd">Filtros</string>
+    <string name="pokedex_load_more_retry">Reintentar</string>
     <string name="detail_unavailable">No disponible</string>
     <string name="detail_about">Info</string>
     <string name="detail_attributes">Atributos</string>

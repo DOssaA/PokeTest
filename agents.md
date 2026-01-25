@@ -91,13 +91,17 @@ Follow these instructions before making changes.
 **Constitution version**: (see version in `.specify/memory/constitution.md`).
 
 ## Active Technologies
-- Kotlin 2.0.21 + Jetpack Compose (BOM 2024.09.00), ViewModel, Navigation
-- Retrofit + OkHttp + Moshi for PokeAPI access (HTTPS-only)
-- Room cache for Pokemon data; encrypted DataStore for user favorites
-- Koin for DI; Coil for image loading; Coroutines + Flow for async
-- Kotlin 2.0.21 + Jetpack Compose (BOM 2024.09.00), Navigation Compose, ViewModel, DataStore Preferences, AndroidX Biometric, Koin, Room, Retrofit/OkHttp/Moshi (002-login-auth)
-- Room cache (existing) + DataStore for credentials (encrypted using Keystore-backed keys) (002-login-auth)
+- Kotlin (JVM 11)
+- Jetpack Compose (BOM, Material3, Navigation, ViewModel)
+- Coroutines + Flow
+- Retrofit + OkHttp + Moshi (HTTPS-only PokeAPI)
+- Room (Pokemon cache)
+- Encrypted DataStore Preferences (favorites/auth/credentials)
+- Koin (DI)
+- Coil (image loading)
+- AndroidX Biometric
 
 ## Recent Changes
-- 001-pokedex-details: Implemented Pokedex list/detail, repository + use cases,
-  and encrypted favorites with Room/DataStore + Retrofit/OkHttp/Moshi
+- 003-pokedex-search-filter: Added spec/plan artifacts for Pokedex search, filters, lazy loading, and test/doc updates
+- 002-login-auth: Implemented OAuth/password/biometric auth with encrypted DataStore-backed credentials
+- 001-pokedex-details: Implemented Pokedex list/detail, repository + use cases, and encrypted favorites with Room/DataStore + Retrofit/OkHttp/Moshi

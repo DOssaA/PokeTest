@@ -16,3 +16,5 @@ data class NamedApiResourceDto(
     @Json(name = "name") val name: String,
     @Json(name = "url") val url: String
 )
+
+typealias PokemonTypeListResponseDto = PokemonListResponseDto

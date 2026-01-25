@@ -8,6 +8,7 @@ architecture, test-first development, and a consistent, delightful UI.
 
 - Browse and discover Pokemon with fast, responsive screens.
 - View rich details and manage favorites.
+- Search by name, filter by type/favorites, and keep browsing with lazy loading.
 - Built with a scalable, layered architecture and TDD discipline.
 
 ## Architecture
@@ -73,6 +74,7 @@ This repo follows the project constitution in `.specify/memory/constitution.md`:
 
 - PokeAPI responses are cached locally to respect fair use and improve performance.
 - Favorite Pokemon are stored locally with encryption and persist across relaunch.
+- The Pokedex list supports search, type/favorite filters, and incremental loading.
 
 ## Design Reference
 

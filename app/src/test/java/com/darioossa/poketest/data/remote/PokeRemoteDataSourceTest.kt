@@ -62,6 +62,22 @@ class PokeRemoteDataSourceTest {
         coVerify(exactly = 1) { service.getPokemonSpecies("25") }
     }
 
+    @Test
+    fun `fetchPokemonTypes delegates to service`() = runTest {
+        val response = PokemonListResponseDto(
+            count = 20,
+            next = null,
+            previous = null,
+            results = listOf(NamedApiResourceDto("fire", "https://pokeapi.co/api/v2/type/10/"))
+        )
+        coEvery { service.getPokemonTypes(100, 0) } returns response
+
+        val result = dataSource.fetchPokemonTypes(100, 0)
+
+        assertEquals(response, result)
+        coVerify(exactly = 1) { service.getPokemonTypes(100, 0) }
+    }
+
     private fun sampleDetail() = PokemonDetailDto(
         id = 25,
         name = "pikachu",

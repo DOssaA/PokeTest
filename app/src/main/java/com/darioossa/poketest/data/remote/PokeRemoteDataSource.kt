@@ -2,6 +2,7 @@ package com.darioossa.poketest.data.remote
 
 import com.darioossa.poketest.data.remote.dto.PokemonDetailDto
 import com.darioossa.poketest.data.remote.dto.PokemonListResponseDto
+import com.darioossa.poketest.data.remote.dto.PokemonTypeListResponseDto
 import com.darioossa.poketest.data.remote.dto.PokemonSpeciesDto
 
 interface PokeRemoteDataSource {
@@ -10,6 +11,8 @@ interface PokeRemoteDataSource {
     suspend fun fetchPokemonDetail(idOrName: String): PokemonDetailDto
 
     suspend fun fetchPokemonSpecies(idOrName: String): PokemonSpeciesDto
+
+    suspend fun fetchPokemonTypes(limit: Int, offset: Int): PokemonTypeListResponseDto
 }
 
 class PokeRemoteDataSourceImpl(
@@ -23,4 +26,7 @@ class PokeRemoteDataSourceImpl(
 
     override suspend fun fetchPokemonSpecies(idOrName: String) =
         service.getPokemonSpecies(idOrName)
+
+    override suspend fun fetchPokemonTypes(limit: Int, offset: Int) =
+        service.getPokemonTypes(limit, offset)
 }

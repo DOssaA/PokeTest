@@ -1,0 +1,212 @@
+openapi: 3.0.3
+info:
+  title: PokeAPI (subset) for Pokedex Search & Filters
+  version: v2
+  description: |
+    Subset of PokeAPI endpoints used by the Pokedex list, filter types, and detail hydration.
+servers:
+  - url: https://pokeapi.co/api/v2
+paths:
+  /pokemon:
+    get:
+      summary: List Pokemon resources
+      parameters:
+        - in: query
+          name: limit
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+        - in: query
+          name: offset
+          required: true
+          schema:
+            type: integer
+            minimum: 0
+      responses:
+        '200':
+          description: Paginated list of Pokemon
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamedApiResourceList'
+  /pokemon/{idOrName}:
+    get:
+      summary: Get Pokemon details (types, sprites, stats)
+      parameters:
+        - in: path
+          name: idOrName
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pokemon detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PokemonDetail'
+  /pokemon-species/{idOrName}:
+    get:
+      summary: Get Pokemon species (descriptions, genera)
+      parameters:
+        - in: path
+          name: idOrName
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pokemon species
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PokemonSpecies'
+  /type:
+    get:
+      summary: List Pokemon types
+      responses:
+        '200':
+          description: Paginated list of types
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NamedApiResourceList'
+  /type/{idOrName}:
+    get:
+      summary: Get Pokemon type details
+      parameters:
+        - in: path
+          name: idOrName
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pokemon type detail
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypeDetail'
+components:
+  schemas:
+    NamedApiResource:
+      type: object
+      required: [name, url]
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+    NamedApiResourceList:
+      type: object
+      required: [count, results]
+      properties:
+        count:
+          type: integer
+        next:
+          type: string
+          nullable: true
+        previous:
+          type: string
+          nullable: true
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/NamedApiResource'
+    PokemonDetail:
+      type: object
+      required: [id, name, types, sprites]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        types:
+          type: array
+          items:
+            $ref: '#/components/schemas/TypeSlot'
+        sprites:
+          $ref: '#/components/schemas/PokemonSprites'
+        stats:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatSlot'
+        abilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/AbilitySlot'
+    TypeSlot:
+      type: object
+      required: [type]
+      properties:
+        type:
+          $ref: '#/components/schemas/NamedApiResource'
+    StatSlot:
+      type: object
+      required: [base_stat, stat]
+      properties:
+        base_stat:
+          type: integer
+        stat:
+          $ref: '#/components/schemas/NamedApiResource'
+    AbilitySlot:
+      type: object
+      required: [is_hidden, ability]
+      properties:
+        is_hidden:
+          type: boolean
+        ability:
+          $ref: '#/components/schemas/NamedApiResource'
+    PokemonSprites:
+      type: object
+      properties:
+        front_default:
+          type: string
+          nullable: true
+        other:
+          type: object
+          properties:
+            official-artwork:
+              type: object
+              properties:
+                front_default:
+                  type: string
+                  nullable: true
+    PokemonSpecies:
+      type: object
+      properties:
+        flavor_text_entries:
+          type: array
+          items:
+            type: object
+            properties:
+              flavor_text:
+                type: string
+              language:
+                $ref: '#/components/schemas/NamedApiResource'
+        genera:
+          type: array
+          items:
+            type: object
+            properties:
+              genus:
+                type: string
+              language:
+                $ref: '#/components/schemas/NamedApiResource'
+    TypeDetail:
+      type: object
+      required: [id, name]
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        pokemon:
+          type: array
+          items:
+            type: object
+            properties:
+              pokemon:
+                $ref: '#/components/schemas/NamedApiResource'

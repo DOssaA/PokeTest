@@ -14,12 +14,20 @@ class FavoritesPersistenceTest {
 
     @Test
     fun favoriteToggleUpdatesState() {
+        val items = listOf(
+            PokemonSummary(25, "pikachu", "https://example.com/25.png", emptyList(), false)
+        )
         val state = mutableStateOf(
             PokedexListState(
                 isLoading = false,
-                items = listOf(
-                    PokemonSummary(25, "pikachu", "https://example.com/25.png", emptyList(), false)
-                ),
+                items = items,
+                visibleItems = items,
+                query = "",
+                favoritesOnly = false,
+                selectedTypes = emptySet(),
+                availableTypes = emptyList(),
+                isLoadingMore = false,
+                loadMoreError = null,
                 errorMessage = null
             )
         )
@@ -33,13 +41,18 @@ class FavoritesPersistenceTest {
                     val updated = state.value.items.map {
                         if (it.id == 25) it.copy(isFavorite = !it.isFavorite) else it
                     }
-                    state.value = state.value.copy(items = updated)
-                }
+                    state.value = state.value.copy(items = updated, visibleItems = updated)
+                },
+                onSearchQueryChanged = {},
+                onOpenFilters = {},
+                onApplyFilters = { _, _ -> },
+                onLoadMore = {}
             )
         }
 
         composeRule.onNodeWithContentDescription("Favorite Off").assertIsDisplayed()
-        state.value = state.value.copy(items = listOf(state.value.items.first().copy(isFavorite = true)))
+        val updated = listOf(state.value.items.first().copy(isFavorite = true))
+        state.value = state.value.copy(items = updated, visibleItems = updated)
         composeRule.onNodeWithContentDescription("Favorite On").assertIsDisplayed()
     }
 }
