@@ -21,6 +21,7 @@ koin = "4.1.1"
 coil = "2.7.0"
 ksp = "2.3.4"
 espressoCore = "3.7.0"
+biometric = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -60,6 +61,7 @@ datastore-preferences = { module = "androidx.datastore:datastore-preferences", v
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

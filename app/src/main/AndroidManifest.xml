@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <!-- required for Biometrics on Android Api level 26 and 27 to avoid possible runtime crash -->
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:name=".PokeTestApp"

@@ -1,0 +1,224 @@
+openapi: 3.0.3
+info:
+  title: Local Authentication API
+  version: 1.0.0
+  description: Local-only authentication contract for simulated login methods.
+servers:
+  - url: local://auth
+paths:
+  /auth/login:
+    post:
+      summary: Login with username and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordLoginRequest'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthSuccessResponse'
+        '400':
+          description: Missing or invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthErrorResponse'
+  /auth/biometric:
+    post:
+      summary: Confirm biometric login result
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BiometricLoginRequest'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthSuccessResponse'
+        '409':
+          description: User canceled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthCanceledResponse'
+        '500':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthErrorResponse'
+  /auth/google/start:
+    post:
+      summary: Start simulated Google OAuth flow
+      responses:
+        '200':
+          description: OAuth UI should be displayed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GoogleFlowStartResponse'
+  /auth/google/complete:
+    post:
+      summary: Complete simulated Google OAuth flow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GoogleFlowCompleteRequest'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthSuccessResponse'
+        '202':
+          description: Loading delay in progress
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthLoadingResponse'
+        '409':
+          description: User canceled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthCanceledResponse'
+        '500':
+          description: Authentication error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthErrorResponse'
+components:
+  schemas:
+    AuthMethod:
+      type: string
+      enum: [PASSWORD, BIOMETRIC, GOOGLE]
+    AuthStatus:
+      type: string
+      enum: [SUCCESS, CANCELED, ERROR, LOADING]
+    PasswordLoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          minLength: 1
+    BiometricLoginRequest:
+      type: object
+      required: [outcome]
+      properties:
+        outcome:
+          type: string
+          enum: [SUCCESS, CANCELED, ERROR]
+    GoogleFlowStartResponse:
+      type: object
+      required: [flowId, provider]
+      properties:
+        flowId:
+          type: string
+        provider:
+          type: string
+          enum: [GOOGLE_SIMULATED]
+    GoogleFlowCompleteRequest:
+      type: object
+      required: [flowId, outcome]
+      properties:
+        flowId:
+          type: string
+        outcome:
+          type: string
+          enum: [SUCCESS, CANCELED, ERROR, LOADING]
+        delayMs:
+          type: integer
+          minimum: 0
+          description: Optional delay to simulate loading state
+    AuthToken:
+      type: object
+      required: [accessToken, tokenType]
+      properties:
+        accessToken:
+          type: string
+        tokenType:
+          type: string
+          example: Bearer
+        expiresInSeconds:
+          type: integer
+          nullable: true
+    AuthProfile:
+      type: object
+      properties:
+        displayName:
+          type: string
+        email:
+          type: string
+          format: email
+        avatarUrl:
+          type: string
+          nullable: true
+    AuthSuccessResponse:
+      type: object
+      required: [status, method, authenticatedAt]
+      properties:
+        status:
+          $ref: '#/components/schemas/AuthStatus'
+        method:
+          $ref: '#/components/schemas/AuthMethod'
+        token:
+          $ref: '#/components/schemas/AuthToken'
+        profile:
+          $ref: '#/components/schemas/AuthProfile'
+        authenticatedAt:
+          type: string
+          format: date-time
+    AuthCanceledResponse:
+      type: object
+      required: [status, method, message]
+      properties:
+        status:
+          $ref: '#/components/schemas/AuthStatus'
+        method:
+          $ref: '#/components/schemas/AuthMethod'
+        message:
+          type: string
+    AuthErrorResponse:
+      type: object
+      required: [status, method, error]
+      properties:
+        status:
+          $ref: '#/components/schemas/AuthStatus'
+        method:
+          $ref: '#/components/schemas/AuthMethod'
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+    AuthLoadingResponse:
+      type: object
+      required: [status, method, retryAfterMs]
+      properties:
+        status:
+          $ref: '#/components/schemas/AuthStatus'
+        method:
+          $ref: '#/components/schemas/AuthMethod'
+        retryAfterMs:
+          type: integer
+          minimum: 0
