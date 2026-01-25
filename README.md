@@ -11,8 +11,9 @@ agradable.
 - Consulta detalles completos y administra favoritos.
 - Busca por nombre, filtra por tipo/favoritos y sigue navegando con carga incremental.
 - Construida con una arquitectura escalable por capas y disciplina TDD.
+- Ingreso por biometría, con Google (simulado)
 
-Ingreso por biometría y búsqueda:
+Video con el ingreso con biometría, listado de Pokemones y búsqueda:
 https://github.com/user-attachments/assets/83558a27-18f7-44d7-a4a3-4b8bbdaadc64
 
 ## Instalación
@@ -124,6 +125,10 @@ architecture, test-first development, and a consistent, delightful UI.
 - View rich details and manage favorites.
 - Search by name, filter by type/favorites, and keep browsing with lazy loading.
 - Built with a scalable, layered architecture and TDD discipline.
+- Login with biometrics, with Google (simulated)
+
+Video logging in using biometrics, list of Pokemons y search:
+https://github.com/user-attachments/assets/83558a27-18f7-44d7-a4a3-4b8bbdaadc64
 
 ## Architecture
 
