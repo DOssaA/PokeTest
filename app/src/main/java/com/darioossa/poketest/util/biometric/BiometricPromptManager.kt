@@ -4,6 +4,7 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
+import com.darioossa.poketest.R
 import com.darioossa.poketest.domain.model.AuthMethod
 import com.darioossa.poketest.domain.model.AuthResult
 import com.darioossa.poketest.domain.model.BiometricAuthRequest
@@ -120,6 +121,7 @@ class BiometricPromptManager {
                 .setTitle(request.title)
                 .setAllowedAuthenticators(authenticators)
                 .setConfirmationRequired(false)
+                .setNegativeButtonText(activity.getString(R.string.login_biometric_cancel))
             request.subtitle?.takeIf { it.isNotBlank() }?.let { builder.setSubtitle(it) }
             request.description?.takeIf { it.isNotBlank() }?.let { builder.setDescription(it) }
             val promptInfo = builder.build()

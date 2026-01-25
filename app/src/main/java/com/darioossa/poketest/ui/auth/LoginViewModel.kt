@@ -11,6 +11,7 @@ import com.darioossa.poketest.ui.base.BaseMVIViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginViewModel(
     private val loginWithPasswordUseCase: LoginWithPasswordUseCase,
@@ -49,13 +50,15 @@ class LoginViewModel(
         val current = state.value
         if (current.isSubmitting && current.error == null) {
             viewModelScope.launch(dispatcher) {
-                val result = loginWithBiometricUseCase(
-                    BiometricAuthRequest(
-                        title = "Unlock PokeTest",
-                        subtitle = "Sign in with biometrics",
-                        description = "Use fingerprint or face to continue"
+                val result = withContext(Dispatchers.Main) {
+                    loginWithBiometricUseCase(
+                        BiometricAuthRequest(
+                            title = "Unlock PokeTest",
+                            subtitle = "Sign in with biometrics",
+                            description = "Use fingerprint or face to continue"
+                        )
                     )
-                )
+                }
                 sendEvent(LoginEvent.AuthResultReceived(result))
             }
         }

@@ -21,6 +21,7 @@
     <string name="login_google">Ingresa con Google</string>
     <string name="login_biometric_cd">Biometría</string>
     <string name="login_google_cd">Google</string>
+    <string name="login_biometric_cancel">Cancelar</string>
     <string name="login_error_missing_username">El nombre de usuario es requerido</string>
     <string name="login_error_missing_password">La contraseña es requerida</string>
     <string name="login_error_invalid_credentials">Credenciales inválidas</string>
