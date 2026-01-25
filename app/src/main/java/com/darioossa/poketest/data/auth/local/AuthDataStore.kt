@@ -36,10 +36,10 @@ class AuthDataStore(
     private val adapter = moshi.adapter(StoredCredential::class.java)
 
     suspend fun saveCredential(credential: UserCredential): Boolean {
-        val stored = credential.toStored()
-        val json = adapter.toJson(stored)
-        val encrypted = cryptoManager.encrypt(json)
         return runCatching {
+            val stored = credential.toStored()
+            val json = adapter.toJson(stored)
+            val encrypted = cryptoManager.encrypt(json)
             context.authDataStore.edit { prefs ->
                 prefs[credentialKey] = encrypted
             }
