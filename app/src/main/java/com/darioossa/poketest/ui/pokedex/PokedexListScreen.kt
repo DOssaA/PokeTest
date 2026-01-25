@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -246,45 +247,51 @@ fun PokedexListScreen(
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(12.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Checkbox(
-                        checked = localFavoritesOnly,
-                        onCheckedChange = { checked ->
-                            localFavoritesOnly = checked
-                            onApplyFilters(localFavoritesOnly, localSelectedTypes)
-                        }
-                    )
-                    Spacer(modifier = Modifier.size(8.dp))
-                    Text(text = stringResource(R.string.pokedex_filter_favorites))
-                }
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(
-                    text = stringResource(R.string.pokedex_filter_types),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.SemiBold
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                state.availableTypes.forEach { type ->
-                    val isSelected = localSelectedTypes.contains(type)
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Checkbox(
-                            checked = isSelected,
-                            onCheckedChange = { checked ->
-                                localSelectedTypes = if (checked) {
-                                    localSelectedTypes + type
-                                } else {
-                                    localSelectedTypes - type
+                LazyColumn (verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    item {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(
+                                checked = localFavoritesOnly,
+                                onCheckedChange = { checked ->
+                                    localFavoritesOnly = checked
+                                    onApplyFilters(localFavoritesOnly, localSelectedTypes)
                                 }
-                                onApplyFilters(localFavoritesOnly, localSelectedTypes)
-                            }
+                            )
+                            Spacer(modifier = Modifier.size(8.dp))
+                            Text(text = stringResource(R.string.pokedex_filter_favorites))
+                        }
+                    }
+                    item {
+                        Text(
+                            text = stringResource(R.string.pokedex_filter_types),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.SemiBold
                         )
-                        Spacer(modifier = Modifier.size(8.dp))
-                        Text(text = type.replaceFirstChar { it.uppercase() })
+                    }
+                    state.availableTypes.forEach { type ->
+                        val isSelected = localSelectedTypes.contains(type)
+                        item {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Checkbox(
+                                    checked = isSelected,
+                                    onCheckedChange = { checked ->
+                                        localSelectedTypes = if (checked) {
+                                            localSelectedTypes + type
+                                        } else {
+                                            localSelectedTypes - type
+                                        }
+                                        onApplyFilters(localFavoritesOnly, localSelectedTypes)
+                                    }
+                                )
+                                Spacer(modifier = Modifier.size(8.dp))
+                                Text(text = type.replaceFirstChar { it.uppercase() })
+                            }
+                        }
                     }
                 }
                 Spacer(modifier = Modifier.height(12.dp))
