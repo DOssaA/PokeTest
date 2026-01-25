@@ -10,6 +10,9 @@ import com.darioossa.poketest.domain.model.UserCredential
 import com.darioossa.poketest.domain.model.GoogleAuthRequest
 import java.util.UUID
 
+/**
+ * Default auth repository that coordinates local storage with simulated remote providers.
+ */
 class AuthRepositoryImpl(
     private val localDataSource: AuthLocalDataSource,
     private val remoteDataSource: AuthRemoteDataSource

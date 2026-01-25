@@ -14,13 +14,34 @@ import java.util.UUID
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
+/**
+ * Coordinates AndroidX BiometricPrompt authentication for the login flow.
+ *
+ * This helper binds to a [FragmentActivity] to display the system biometric prompt and
+ * exposes a suspend API that maps prompt callbacks into [AuthResult] outcomes.
+ *
+ * Expected outcomes:
+ * - [AuthResult.Success] when authentication succeeds
+ * - [AuthResult.Canceled] when the user dismisses the prompt
+ * - [AuthResult.Error] for other errors or when biometrics are unavailable
+ */
 class BiometricPromptManager {
     private var activityRef: WeakReference<FragmentActivity>? = null
 
+    /**
+     * Binds the prompt manager to the current [FragmentActivity].
+     *
+     * Must be called before [authenticate] so the prompt can be displayed.
+     */
     fun bind(activity: FragmentActivity) {
         activityRef = WeakReference(activity)
     }
 
+    /**
+     * Triggers the system biometric prompt and returns the authentication outcome.
+     *
+     * The [BiometricAuthRequest] supplies the title/subtitle/description used in the prompt.
+     */
     suspend fun authenticate(request: BiometricAuthRequest): AuthResult {
         val activity = activityRef?.get()
             ?: return AuthResult.Error(

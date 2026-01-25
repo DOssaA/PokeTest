@@ -18,6 +18,9 @@ import kotlinx.coroutines.flow.map
 
 private val Context.authDataStore: DataStore<Preferences> by preferencesDataStore(name = "auth")
 
+/**
+ * Encrypted DataStore wrapper for persisting a single authenticated credential.
+ */
 class AuthDataStore(
     private val context: Context,
     private val cryptoManager: AuthCryptoManager,

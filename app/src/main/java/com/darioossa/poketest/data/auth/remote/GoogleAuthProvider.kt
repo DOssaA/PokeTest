@@ -11,6 +11,9 @@ import com.darioossa.poketest.domain.model.UserCredential
 import kotlinx.coroutines.delay
 import java.util.UUID
 
+/**
+ * Local Google OAuth simulator that returns deterministic outcomes for UI testing.
+ */
 class GoogleAuthProvider {
     suspend fun authenticate(request: GoogleAuthRequest): AuthResult {
         return when (request.outcome) {

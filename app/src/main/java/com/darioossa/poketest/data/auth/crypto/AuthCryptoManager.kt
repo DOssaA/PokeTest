@@ -11,7 +11,7 @@ import javax.crypto.spec.GCMParameterSpec
 
 /**
  * Encrypts and decrypts small payloads using an app-scoped AES/GCM key
- * stored in Android Keystore.
+ * stored in Android Keystore for auth credential storage.
  */
 class AuthCryptoManager {
     private val keyStore = KeyStore.getInstance(ANDROID_KEYSTORE).apply { load(null) }

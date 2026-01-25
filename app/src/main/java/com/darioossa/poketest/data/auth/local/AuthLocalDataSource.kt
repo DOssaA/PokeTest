@@ -2,6 +2,9 @@ package com.darioossa.poketest.data.auth.local
 
 import com.darioossa.poketest.domain.model.UserCredential
 
+/**
+ * Local source for storing and retrieving the current authenticated credential.
+ */
 interface AuthLocalDataSource {
     suspend fun saveCredential(credential: UserCredential): Boolean
 
@@ -10,6 +13,9 @@ interface AuthLocalDataSource {
     suspend fun clearCredential()
 }
 
+/**
+ * Default local data source backed by [AuthDataStore].
+ */
 class AuthLocalDataSourceImpl(
     private val authDataStore: AuthDataStore
 ) : AuthLocalDataSource {
