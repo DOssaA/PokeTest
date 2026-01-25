@@ -10,11 +10,12 @@ agradable.
 - Explora y descubre Pokémon con pantallas rápidas y responsivas.
 - Consulta detalles completos y administra favoritos.
 - Busca por nombre, filtra por tipo/favoritos y sigue navegando con carga incremental.
-- Construida con una arquitectura escalable por capas y disciplina TDD.
+- Construida con una arquitectura escalable por capas, siguiendo principios SOLID y disciplina TDD.
 - Ingreso por biometría, con Google (simulado)
 
 Video con el ingreso con biometría, listado de Pokemones y búsqueda:
 https://github.com/user-attachments/assets/83558a27-18f7-44d7-a4a3-4b8bbdaadc64
+
 Video de ingreso con usuario/contraseña, filtros y detalle:
 https://github.com/user-attachments/assets/6ea62127-3419-49fb-b362-28777fcfa0c4
 
@@ -82,9 +83,8 @@ Este repo sigue la constitución del proyecto en `.specify/memory/constitution.m
 ## Security
 
 - Tráfico de red solo por HTTPS.
-- OAuth para autenticación.
+- OAuth para autenticación. (Simulado)
 - Persistencia local cifra los datos del usuario.
-- Se requiere análisis estático; las credenciales nunca se almacenan en el repo.
 
 ## Authentication (Simulated)
 
@@ -128,11 +128,12 @@ architecture, test-first development, and a consistent, delightful UI.
 - Browse and discover Pokemon with fast, responsive screens.
 - View rich details and manage favorites.
 - Search by name, filter by type/favorites, and keep browsing with lazy loading.
-- Built with a scalable, layered architecture and TDD discipline.
+- Built with a scalable, layered architecture, following SOLID principles and TDD discipline.
 - Login with biometrics, with Google (simulated)
 
 Video logging in using biometrics, list of Pokemons y search:
 https://github.com/user-attachments/assets/83558a27-18f7-44d7-a4a3-4b8bbdaadc64
+
 Video logging in with user/password, filters y details:
 https://github.com/user-attachments/assets/6ea62127-3419-49fb-b362-28777fcfa0c4
 
@@ -182,9 +183,8 @@ This repo follows the project constitution in `.specify/memory/constitution.md`:
 ## Security
 
 - HTTPS-only network traffic.
-- OAuth for authentication.
+- OAuth for authentication. (simulated)
 - Local persistence encrypts user data.
-- Static analysis is required; credentials are never stored in the repo.
 
 ## Authentication (Simulated)
 
