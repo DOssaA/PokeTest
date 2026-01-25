@@ -15,6 +15,10 @@ agradable.
 
 Video con el ingreso con biometría, listado de Pokemones y búsqueda:
 https://github.com/user-attachments/assets/83558a27-18f7-44d7-a4a3-4b8bbdaadc64
+Video de ingreso con usuario/contraseña, filtros y detalle:
+https://github.com/user-attachments/assets/6ea62127-3419-49fb-b362-28777fcfa0c4
+
+
 
 ## Instalación
 
@@ -129,6 +133,8 @@ architecture, test-first development, and a consistent, delightful UI.
 
 Video logging in using biometrics, list of Pokemons y search:
 https://github.com/user-attachments/assets/83558a27-18f7-44d7-a4a3-4b8bbdaadc64
+Video logging in with user/password, filters y details:
+https://github.com/user-attachments/assets/6ea62127-3419-49fb-b362-28777fcfa0c4
 
 ## Architecture
 
